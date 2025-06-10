@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
+import styles from './style.module.css';
+import { Link } from 'react-router-dom';
 
-class NotFound extends Component {
+export default class NotFound extends Component {
   render() {
     return (
-      <>
-        <div>
-          <h1>404</h1>
-          <p>Page not found</p>
-        </div>
-      </>
+      <div className={styles.container}>
+        <h1 className={styles.title}>404</h1>
+        <p className={styles.text}>Página não encontrada</p>
+        <Link to="/" className={styles.homeLink}>Voltar para o Início</Link>
+      </div>
     );
   }
-};
-
-export default NotFound;
+}
