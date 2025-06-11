@@ -89,11 +89,24 @@ export default class Shop extends Component {
     }
   };
 
-  handleOpenCategoryModal = () => this.setState({ isCategoryModalOpen: true });
+  handleOpenCategoryModal = () => {
+
+    if (this.state.error !== null) {
+      alert("Ocorreu um erro, tente novamente mais tarde.");
+      return;
+    }
+
+    this.setState({ isCategoryModalOpen: true })
+  }
   handleCloseCategoryModal = () => this.setState({ isCategoryModalOpen: false });
 
   handleOpenProductModal = () => {
     const hasCategories = Object.keys(this.state.categoriesMap).length > 0;
+
+    if (this.state.error !== null) {
+      alert("Ocorreu um erro, tente novamente mais tarde.");
+      return;
+    }
 
     if (!hasCategories) {
       alert("Você precisa cadastrar ao menos uma categoria antes de adicionar um produto.");
@@ -159,7 +172,7 @@ export default class Shop extends Component {
   };
 
   render() {
-    const { loading, error, isCategoryModalOpen, isProductModalOpen, productToEdit } = this.state;
+    const { loading, error, isCategoryModalOpen, isProductModalOpen, productToEdit, categoriesList } = this.state;
 
     return (
       <>
@@ -168,10 +181,10 @@ export default class Shop extends Component {
             <header className={styles.shopHeader}>
               <h1 className={styles.title}>Produtos</h1>
               <div className={styles.actions}>
-                <button className={`${styles.button} ${styles.actionButton}`} onClick={this.handleOpenCategoryModal}>
+                <button disabled={loading} className={`${styles.button} ${styles.actionButton}`} onClick={this.handleOpenCategoryModal}>
                   + Nova Categoria
                 </button>
-                <button className={`${styles.button} ${styles.actionButton}`} onClick={this.handleOpenProductModal}>
+                <button disabled={loading} className={`${styles.button} ${styles.actionButton}`} onClick={this.handleOpenProductModal}>
                   + Novo Produto
                 </button>
               </div>
@@ -182,7 +195,7 @@ export default class Shop extends Component {
                   {[...Array(6)].map((_, index) => <ProductCardSkeleton key={index} />)}
                 </div>
               )}
-              {error && <p className={styles.error}>{error}</p>}
+              {error && <div className={styles.emptyState}><p>{error}</p></div>}
               {!loading && !error && (
                 <div className={styles.productList}>
                   {this.renderProducts()}
@@ -200,8 +213,8 @@ export default class Shop extends Component {
           <ProductForm
             show={isProductModalOpen}
             onSuccess={this.handleSuccessfulRegistration}
-            productToEdit={this.state.productToEdit}
-            categories={this.state.categoriesList}
+            productToEdit={productToEdit}
+            categories={categoriesList}
           />
         </Modal>
       </>

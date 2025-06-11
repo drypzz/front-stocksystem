@@ -22,8 +22,6 @@ export default class ProductForm extends Component {
          const response = await api.get('/category');
          const categoriesList = response.data?.categories || response.data;
 
-         console.log('Categorias recebidas da API:', categoriesList);
-
          if (Array.isArray(categoriesList)) {
             this.setState({ categories: categoriesList });
          } else {
@@ -52,8 +50,6 @@ export default class ProductForm extends Component {
       this.setState({ isLoading: true, error: null, success: null });
       const { product } = this.state;
       const isEditing = !!product.id;
-
-      console.log('Dados do produto:', product);
 
       if (!product.name || !product.price || !product.quantity || !product.categoryId) {
          this.setState({ error: 'Preencha todos os campos obrigatórios (*).', isLoading: false });

@@ -61,6 +61,13 @@
    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.button:disabled {
+   background-color: #374151;
+   color: #9ca3af;
+   cursor: not-allowed;
+   box-shadow: none;
+}
+
 .primaryButton {
    background-color: #38bdf8;
    color: #0f172a;
