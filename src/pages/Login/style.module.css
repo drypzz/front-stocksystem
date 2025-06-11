@@ -10,7 +10,6 @@
 .form {
   background-color: #1e293b;
   padding: 2rem 2.5rem;
-  border-radius: 12px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
@@ -40,7 +39,6 @@
 .inputGroup input {
   padding: 0.75rem 1rem;
   border: 1px solid #334155;
-  border-radius: 8px;
   background-color: #0f172a;
   color: #f8fafc;
   transition: border 0.3s, box-shadow 0.3s;
@@ -57,7 +55,6 @@
   background-color: #38bdf8;
   color: #0f172a;
   border: none;
-  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -111,10 +108,8 @@
 }
 
 .error {
-  color: #ef4444;
-  background-color: #fee2e2;
+  color: red;
+  background-color: rgba(255, 0, 0, .1);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
   font-size: 0.9rem;
 }

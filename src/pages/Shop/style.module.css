@@ -1,0 +1,248 @@
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
+   min-height: 100vh;
+   background: linear-gradient(135deg, #0f172a, #1e293b);
+   padding: 2rem 1rem;
+}
+
+.shopContent {
+   width: 100%;
+   max-width: 1100px;
+   display: flex;
+   flex-direction: column;
+   gap: 2.5rem;
+}
+
+.shopHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 1.5rem;
+   width: 100%;
+   padding-bottom: 1.5rem;
+   border-bottom: 1px solid #334155;
+}
+
+.actions {
+   display: flex;
+   gap: 1rem;
+}
+
+.title {
+   margin: 0;
+   font-size: 2.25rem;
+   color: #f1f5f9;
+   text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.headerActions {
+   display: flex;
+   gap: 1rem;
+}
+
+.button {
+   padding: 0.75rem 1.25rem;
+   border: none;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   text-decoration: none;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.5rem;
+   white-space: nowrap;
+}
+
+.button:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.primaryButton {
+   background-color: #38bdf8;
+   color: #0f172a;
+}
+
+.primaryButton:hover {
+   background-color: #0ea5e9;
+}
+
+.secondaryButton {
+   background-color: transparent;
+   color: #38bdf8;
+   border: 1px solid #38bdf8;
+}
+
+.secondaryButton:hover {
+   background-color: rgba(56, 189, 248, 0.1);
+}
+
+.productListSection {
+   width: 100%;
+}
+
+.productList {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+   gap: 1.5rem;
+}
+
+.productCard {
+   background-color: #1e293b;
+   padding: 1.5rem;
+   display: flex;
+   flex-direction: column;
+   border: 1px solid #334155;
+   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.productCard:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+   border-color: #38bdf8;
+}
+
+.productCardHeader {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   gap: 1rem;
+   margin-bottom: 1rem;
+}
+
+.productCardHeader h3 {
+   margin: 0;
+   font-size: 1.25rem;
+   color: #f1f5f9;
+   line-height: 1.3;
+}
+
+.productCategory {
+   background-color: rgba(56, 189, 248, 0.15);
+   color: #38bdf8;
+   padding: 0.25rem 0.75rem;
+   font-size: 0.75rem;
+   font-weight: 500;
+   flex-shrink: 0;
+}
+
+.productDescription {
+   color: #94a3b8;
+   font-size: 0.95rem;
+   line-height: 1.6;
+   flex-grow: 1;
+   margin-bottom: 1rem;
+}
+
+.productCardFooter {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding-top: 1rem;
+   margin-top: auto;
+   border-top: 1px solid #334155;
+}
+
+.productPrice {
+   font-size: 1.2rem;
+   font-weight: bold;
+   color: #86efac;
+}
+
+.productQuantity {
+   font-size: 0.9rem;
+   font-weight: 500;
+   color: #cbd5e1;
+}
+
+.productActions {
+   display: flex;
+   justify-content: flex-end;
+   gap: 0.75rem;
+   padding-top: 1rem;
+   border-top: 1px solid #334155;
+   margin-top: 1rem;
+}
+
+.actionButton {
+   padding: 0.5rem 1rem;
+   border: none;
+   cursor: pointer;
+   font-weight: 600;
+   transition: all 0.2s ease-in-out;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.4rem;
+}
+
+.editButton {
+   background-color: #3b82f6;
+   color: white;
+}
+
+.editButton:hover {
+   background-color: #2563eb;
+}
+
+.deleteButton {
+   background-color: #ef4444;
+   color: white;
+}
+
+.deleteButton:hover {
+   background-color: #dc2626;
+}
+
+.emptyState p {
+   color: red;
+   background-color: rgba(255, 0, 0, .1);
+   padding: 1rem;
+   font-size: 0.9rem;
+   text-align: center;
+}
+
+.subtext {
+   font-size: 0.9rem;
+   color: #64748b;
+}
+
+.errorIcon {
+   color: #f87171;
+}
+
+.emptyIcon {
+   color: #38bdf8;
+}
+
+@media (max-width: 960px) {
+   .container {
+      padding: 1.5rem 1rem;
+   }
+
+   .shopHeader {
+      flex-direction: column;
+      align-items: stretch;
+   }
+
+   .title {
+      text-align: center;
+      font-size: 1.8rem;
+   }
+
+   .headerActions {
+      justify-content: center;
+      width: 100%;
+   }
+
+   .button {
+      flex-grow: 1;
+      justify-content: center;
+   }
+
+   .productList {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+   }
+}

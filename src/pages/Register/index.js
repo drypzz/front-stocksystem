@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import styles from './style.module.css';
+
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
+import styles from './style.module.css';
+
 import api from '../../services/api';
-import { login } from '../../services/auth';
 
 export default class Register extends Component {
 
@@ -40,11 +41,8 @@ export default class Register extends Component {
     }
 
     try {
-      const response = await api.post('/register', { name, email, password });
-      const { token } = response.data;
-
-      login(token);
-      window.location.href = '/dashboard';
+      await api.post('/register', { name, email, password })
+      window.location.href = '/login';
     } catch (err) {
       this.setState({
         error: err.response?.data?.message || 'Erro ao registrar.',
@@ -66,7 +64,7 @@ export default class Register extends Component {
     return (
       <div className={styles.container}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
-          <h2 className={styles.title}>Criar Conta</h2>
+          <h2 className={styles.title}>Registrar-se</h2>
 
           {error && <p className={styles.error}>{error}</p>}
 
@@ -110,7 +108,7 @@ export default class Register extends Component {
                 className={styles.iconButton}
                 onClick={() => this.togglePasswordVisibility('showPassword')}
               >
-                {showPassword ? 
+                {showPassword ?
                   <FiEye size={18} />
                   :
                   <FiEyeOff size={18} />

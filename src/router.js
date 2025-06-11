@@ -4,7 +4,7 @@ import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
+import Shop from './pages/Shop';
 
 import Navbar from './components/Navbar';
 
@@ -21,7 +21,7 @@ const RouterComponent = () => (
             <Route path='/' element={<Main />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/dashboard' element={<PrivateRoute element={<Dashboard />} />} />
+            <Route path='/shop' element={<PrivateRoute element={<Shop />} />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
     </Router>

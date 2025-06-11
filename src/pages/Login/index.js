@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import styles from './style.module.css';
+
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+
+import styles from './style.module.css';
 
 import api from '../../services/api';
 import { login, isAuthenticated } from '../../services/auth';
@@ -19,7 +21,7 @@ export default class Login extends Component {
 
   componentDidMount() {
     if (isAuthenticated()) {
-      window.location.href = '/dashboard';
+      window.location.href = '/shop';
     }
   }
 
@@ -39,10 +41,9 @@ export default class Login extends Component {
 
     try {
       const response = await api.post('/login', { email, password });
-      const { token } = response.data;
-
-      login(token);
-      window.location.href = '/dashboard';
+      const { token, user } = response.data;
+      login(token, user);
+      window.location.href = '/shop';
     } catch (err) {
       this.setState({
         error: err.response?.data?.message || 'Erro ao fazer login.',
@@ -56,7 +57,7 @@ export default class Login extends Component {
     return (
       <div className={styles.container}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
-          <h2 className={styles.title}>Entrar na Plataforma</h2>
+          <h2 className={styles.title}>Logar-se</h2>
 
           {error && <p className={styles.error}>{error}</p>}
 
@@ -89,7 +90,11 @@ export default class Login extends Component {
                 onClick={this.togglePasswordVisibility}
                 aria-label="Mostrar/ocultar senha"
               >
-                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                {showPassword ?
+                  <FiEye size={18} />
+                  :
+                  <FiEyeOff size={18} />
+                }
               </button>
             </div>
           </div>

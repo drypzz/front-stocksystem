@@ -1,26 +1,61 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { isAuthenticated, logout, getUser } from '../../services/auth';
+
+import {
+  FiHome,
+  FiShoppingCart,
+  FiLogIn,
+  FiUserPlus,
+  FiLogOut,
+  FiUser,
+  FiGrid
+} from 'react-icons/fi';
 
 import styles from './style.module.css';
-
-import { isAuthenticated, logout } from '../../services/auth';
 
 export default class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isMobileMenuOpen: false,
+      isSubmenuOpen: false,
       authenticated: false,
+      user: null,
     };
+    this.submenuRef = React.createRef();
   }
 
   componentDidMount() {
-    this.setState({ authenticated: isAuthenticated() });
+    const authenticated = isAuthenticated();
+    this.setState({ authenticated });
+
+    if (authenticated) {
+      this.setState({ user: getUser() });
+    }
+
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
-  toggleMenu = () => {
-    this.setState((prev) => ({
-      isMobileMenuOpen: !prev.isMobileMenuOpen,
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside = (event) => {
+    if (this.submenuRef.current && !this.submenuRef.current.contains(event.target)) {
+      this.setState({ isSubmenuOpen: false });
+    }
+  };
+
+  toggleMobileMenu = () => {
+    this.setState((prevState) => ({
+      isMobileMenuOpen: !prevState.isMobileMenuOpen,
+    }));
+  };
+
+  toggleSubmenu = () => {
+    this.setState((prevState) => ({
+      isSubmenuOpen: !prevState.isSubmenuOpen,
     }));
   };
 
@@ -29,82 +64,82 @@ export default class Navbar extends Component {
     window.location.href = '/login';
   };
 
+  getUserInitial = () => {
+    const { user } = this.state;
+    return user && user.name ? user.name.charAt(0).toUpperCase() : <FiUser />;
+  };
+
+  getUserName = () => {
+    const { user } = this.state;
+    return user && user.name ? user.name : 'Usuário';
+  }
+
   render() {
-    const { isMobileMenuOpen, authenticated } = this.state;
+    const { isMobileMenuOpen, authenticated, isSubmenuOpen } = this.state;
+
+    const getNavLinkClass = ({ isActive }) =>
+      `${styles.link} ${isActive ? styles.active : ''}`;
 
     return (
       <header className={styles.navbar}>
-        <div className={styles.brand}>
-          <a href='/'>STK</a>
-        </div>
+        <NavLink to="/" className={styles.brand}>STK</NavLink>
 
         <nav
-          className={`${styles.links} ${
-            isMobileMenuOpen ? styles.mobileActive : ''
-          }`}
+          className={`${styles.links} ${isMobileMenuOpen ? styles.mobileActive : ''
+            }`}
         >
+          <NavLink to="/" className={getNavLinkClass}>
+            <FiHome /> Home
+          </NavLink>
           {authenticated ? (
             <>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''}`
-                }
-              >
-                Home
+              <NavLink to="/shop" className={getNavLinkClass}>
+                <FiShoppingCart /> Loja
               </NavLink>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''}`
-                }
-              >
-                Dashboard
-              </NavLink>
-              <button onClick={this.handleLogout} className={styles.logout}>
-                Sair
-              </button>
+              <div className={styles.avatarContainer} ref={this.submenuRef}>
+                <div className={styles.avatar} onClick={this.toggleSubmenu}>
+                  {this.getUserInitial()}
+                </div>
+                {isSubmenuOpen && (
+                  <>
+                    <div className={styles.submenu}>
+                      <NavLink 
+                        to="/dashboard" 
+                        className={styles.submenuLink} 
+                        onClick={this.closeSubmenu}
+                      >
+                        <FiGrid /> Dashboard
+                      </NavLink>
+                      <button onClick={this.handleLogout} className={styles.submenuLogout}>
+                        <FiLogOut /> Sair
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </>
           ) : (
             <>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''}`
-                }
-              >
-                Home
+              <NavLink to="/login" className={getNavLinkClass}>
+                <FiLogIn /> Login
               </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''}`
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  `${styles.link} ${isActive ? styles.active : ''}`
-                }
-              >
-                Registro
+              <NavLink to="/register" className={getNavLinkClass}>
+                <FiUserPlus /> Registro
               </NavLink>
             </>
           )}
         </nav>
 
         <div
-          className={`${styles.burger} ${
-            isMobileMenuOpen ? styles.open : ''
-          }`}
-          onClick={this.toggleMenu}
-          aria-label="Abrir menu"
+          className={`${styles.burger} ${isMobileMenuOpen ? styles.open : ''
+            }`}
+          onClick={this.toggleMobileMenu}
+          aria-label="Alternar menu"
+          aria-expanded={isMobileMenuOpen}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </div>
       </header>
     );
