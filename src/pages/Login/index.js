@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import { FiEye, FiEyeOff, FiLogIn, FiLoader } from 'react-icons/fi';
 
-import styles from './style.module.css';
-
 import api from '../../services/api';
 import { login, isAuthenticated } from '../../services/auth';
+
+import styles from './style.module.css';
 
 export default class Login extends Component {
   constructor(props) {

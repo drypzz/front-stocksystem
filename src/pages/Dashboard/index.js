@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import api from '../../services/api';
 
-import Modal from '../../components/Modal';
+import { FiEdit, FiTrash2, FiPlus, FiSearch } from 'react-icons/fi';
+
 import CategoryForm from '../../containers/CategoryForm';
 import ProductForm from '../../containers/ProductForm';
 import TableSkeleton from '../../containers/TableSkeleton';
 
-import { FiEdit, FiTrash2, FiPlus, FiSearch } from 'react-icons/fi';
+import Modal from '../../components/Modal';
+
+import api from '../../services/api';
 
 import styles from './style.module.css';
 
@@ -55,7 +57,7 @@ export default class Dashboard extends Component {
             });
         } catch (err) {
             this.setState({
-                error: 'Não foi possível carregar os dados. Tente novamente mais tarde.',
+                error: err.response?.data?.message || 'Erro ao carregar os dados. Tente novamente mais tarde.',
                 loading: false,
             });
             console.error("Erro ao buscar dados:", err);
@@ -97,10 +99,24 @@ export default class Dashboard extends Component {
             alert(err.response?.data?.message || "Erro ao excluir a categoria.");
         }
     };
-    handleOpenCategoryModal = () => this.setState({ categoryToEdit: null, isCategoryModalOpen: true });
+    handleOpenCategoryModal = () => {
+
+        if (this.state.error !== null){
+            alert(this.state.error || "Ocorreu um erro. Tente novamente mais tarde.");
+            return;
+        };
+
+        this.setState({ categoryToEdit: null, isCategoryModalOpen: true })
+    };
     handleCloseCategoryModal = () => this.setState({ isCategoryModalOpen: false, categoryToEdit: null });
 
     handleOpenProductModal = () => {
+
+        if (this.state.error !== null){
+            alert(this.state.error || "Ocorreu um erro. Tente novamente mais tarde.");
+            return;
+        };
+
         if (!this.state.categoriesList.length) {
             alert("Você precisa cadastrar ao menos uma categoria antes de adicionar um produto.");
             return;
@@ -160,7 +176,7 @@ export default class Dashboard extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button className={styles.button} onClick={this.handleOpenCategoryModal} disabled={loading}>
+                                <button className={styles.button} onClick={this.handleOpenCategoryModal} disabled={loading || error !== null}>
                                     <FiPlus /> Nova Categoria
                                 </button>
                             </div>
@@ -213,7 +229,7 @@ export default class Dashboard extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button className={styles.button} onClick={this.handleOpenProductModal} disabled={loading}>
+                                <button className={styles.button} onClick={this.handleOpenProductModal} disabled={loading || error !== null || !categoriesList.length}>
                                     <FiPlus /> Novo Produto
                                 </button>
                             </div>
@@ -232,7 +248,7 @@ export default class Dashboard extends Component {
                                     <tbody>
                                         {loading ? (
                                             <TableSkeleton rows={5} columns={[{ width: '10%' }, { width: '30%' }, { width: '20%' }, { width: '15%' }, { width: '15%' }, { width: '10%' }]} />
-                                        ) : filteredProducts.length > 0 ? ( // 6. Use a lista filtrada
+                                        ) : filteredProducts.length > 0 ? (
                                             filteredProducts.map(product => (
                                                 <tr key={product.id}>
                                                     <td>{product.id}</td>

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import api from '../../services/api';
-import ProductCardSkeleton from '../../containers/ProductCardSkeleton';
-import Dropdown from '../../components/Dropdown';
+
 import { FiFilter, FiInfo, FiShoppingCart } from 'react-icons/fi';
+
+import ProductCardSkeleton from '../../containers/ProductCardSkeleton';
+
+import Dropdown from '../../components/Dropdown';
+
+import api from '../../services/api';
+
 import styles from './style.module.css';
 
 export default class Shop extends Component {
@@ -45,10 +50,9 @@ export default class Shop extends Component {
       });
     } catch (err) {
       this.setState({
-        error: 'Não foi possível carregar os produtos. Tente novamente mais tarde.',
+        error: err.response?.data?.message || 'Erro ao carregar os dados. Tente novamente mais tarde.',
         loading: false,
       });
-      console.error("Erro ao buscar dados:", err);
     }
   };
 
@@ -112,7 +116,11 @@ export default class Shop extends Component {
           </header>
 
           <section className={styles.productListSection}>
-            {loading && <div className={styles.productList}><ProductCardSkeleton count={6} /></div>}
+            {loading && <div className={styles.productList}>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
+            </div>}
             {error && <div className={styles.emptyState}><p>{error}</p></div>}
             
             {!loading && !error && (

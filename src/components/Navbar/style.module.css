@@ -71,8 +71,6 @@
   color: #38bdf8;
 }
 
-/* --- O resto do arquivo continua igual --- */
-
 .burger {
   display: none;
   flex-direction: column;

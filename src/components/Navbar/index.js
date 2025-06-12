@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { isAuthenticated, logout, getUser } from '../../services/auth';
 
 import {
   FiHome,
@@ -11,6 +10,8 @@ import {
   FiUser,
   FiGrid
 } from 'react-icons/fi';
+
+import { isAuthenticated, logout, getUser } from '../../services/auth';
 
 import styles from './style.module.css';
 

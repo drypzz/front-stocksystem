@@ -1,27 +1,13 @@
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
 }
 
 .container {
@@ -175,14 +161,13 @@
 }
 
 .emptyState {
-   grid-column: 1 / -1;
-   text-align: center;
-   padding: 4rem 2rem;
-   background-color: rgba(30, 41, 59, 0.5);
+   background-color: rgba(239, 68, 68, 0.1);
+   color: #fca5a5;
+   border: 1px solid #ef4444;
    border-radius: 8px;
-   border: 1px dashed #334155;
    animation: fadeInUp 0.5s ease-out backwards;
-   animation-delay: 0.1s;
+   padding: 2rem;
+   text-align: center;
 }
 
 .emptyIcon {

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import { FiEye, FiEyeOff, FiUserPlus, FiLoader } from 'react-icons/fi';
 
-import styles from './style.module.css';
-
 import api from '../../services/api';
+
+import styles from './style.module.css';
 
 export default class Register extends Component {
   constructor(props) {

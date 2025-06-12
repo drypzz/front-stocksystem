@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { logout } from './auth';
+
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
 const api = axios.create({
@@ -15,6 +17,17 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
+});
+
+api.interceptors.response.use((response) => response, (error) => {
+  const isTokenExpired = error.response?.status === 401 && error.response?.data?.message?.toLowerCase().includes('token expirado.');
+
+  if (isTokenExpired) {
+    logout();
+    window.location.href = '/login';
+  }
+
+  return Promise.reject(error);
 });
 
 export default api;
