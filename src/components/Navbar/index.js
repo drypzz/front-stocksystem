@@ -59,7 +59,12 @@ export default class Navbar extends Component {
     }));
   };
 
+  closeSubmenu = () => {
+    this.setState({ isSubmenuOpen: false });
+  };
+
   handleLogout = () => {
+    this.closeSubmenu();
     logout();
     window.location.href = '/login';
   };

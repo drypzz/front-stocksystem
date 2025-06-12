@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import api from '../../services/api';
+
 import styles from './style.module.css';
 
 export default class CategoryForm extends Component {
@@ -29,7 +31,7 @@ export default class CategoryForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({ error: null, success: null, loading: true });
-    
+
     const { category } = this.state;
     const isEditing = !!category.id;
 
@@ -66,7 +68,7 @@ export default class CategoryForm extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.show && !prevProps.show) {
       const categoryToEdit = this.props.categoryToEdit;
-      
+
       this.setState({
         category: categoryToEdit || this.initialState.category,
         error: null,

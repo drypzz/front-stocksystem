@@ -4,12 +4,12 @@
    align-items: flex-start;
    min-height: 100vh;
    background: linear-gradient(135deg, #0f172a, #1e293b);
-   padding: 2rem 1rem;
+   padding: 2rem 1.5rem;
 }
 
 .shopContent {
    width: 100%;
-   max-width: 1100px;
+   max-width: 1200px;
    display: flex;
    flex-direction: column;
    gap: 2.5rem;
@@ -26,91 +26,11 @@
    border-bottom: 1px solid #334155;
 }
 
-.filterContainer {
-   display: flex;
-   align-items: center;
-   gap: 0.75rem;
-   background-color: #1e293b;
-   border: 1px solid #334155;
-   padding: 0.5rem 0.5rem 0.5rem 1rem;
-   border-radius: 8px;
-   color: #94a3b8;
-}
-
-.categoryFilter {
-   background-color: transparent;
-   border: none;
-   color: #f1f5f9;
-   font-size: 1rem;
-   font-weight: 500;
-   cursor: pointer;
-   outline: none;
-}
-
-.categoryFilter:disabled {
-   cursor: not-allowed;
-   color: #64748b;
-}
-
-.actions {
-   display: flex;
-   gap: 1rem;
-}
-
 .title {
    margin: 0;
    font-size: 2.25rem;
    color: #f1f5f9;
    text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-}
-
-.headerActions {
-   display: flex;
-   gap: 1rem;
-}
-
-.button {
-   padding: 0.75rem 1.25rem;
-   border: none;
-   font-weight: 600;
-   cursor: pointer;
-   transition: all 0.3s ease;
-   text-decoration: none;
-   display: inline-flex;
-   align-items: center;
-   gap: 0.5rem;
-   white-space: nowrap;
-}
-
-.button:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.button:disabled {
-   background-color: #374151;
-   color: #9ca3af;
-   cursor: not-allowed;
-   box-shadow: none;
-}
-
-.primaryButton {
-   background-color: #38bdf8;
-   color: #0f172a;
-}
-
-.primaryButton:hover {
-   background-color: #0ea5e9;
-}
-
-.secondaryButton {
-   background-color: transparent;
-   color: #38bdf8;
-   border: 1px solid #38bdf8;
-}
-
-.secondaryButton:hover {
-   background-color: rgba(56, 189, 248, 0.1);
 }
 
 .productListSection {
@@ -119,17 +39,19 @@
 
 .productList {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-   gap: 1.5rem;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   gap: 2rem;
 }
 
 .productCard {
    background-color: #1e293b;
+   border: 1px solid #334155;
    padding: 1.5rem;
    display: flex;
    flex-direction: column;
-   border: 1px solid #334155;
    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+   border-radius: 8px;
+   overflow: hidden;
 }
 
 .productCard:hover {
@@ -158,8 +80,9 @@
    color: #38bdf8;
    padding: 0.25rem 0.75rem;
    font-size: 0.75rem;
-   font-weight: 500;
+   font-weight: 600;
    flex-shrink: 0;
+   border-radius: 9999px;
 }
 
 .productDescription {
@@ -167,14 +90,14 @@
    font-size: 0.95rem;
    line-height: 1.6;
    flex-grow: 1;
-   margin-bottom: 1rem;
+   margin-bottom: 1.5rem;
 }
 
 .productCardFooter {
    display: flex;
    justify-content: space-between;
    align-items: center;
-   padding-top: 1rem;
+   padding-top: 1.5rem;
    margin-top: auto;
    border-top: 1px solid #334155;
 }
@@ -201,32 +124,15 @@
 }
 
 .actionButton {
-   padding: 0.5rem 1rem;
+   padding: 0.6rem 1.2rem;
    border: none;
    cursor: pointer;
    font-weight: 600;
    transition: all 0.2s ease-in-out;
    display: inline-flex;
    align-items: center;
-   gap: 0.4rem;
-}
-
-.editButton {
-   background-color: #3b82f6;
-   color: white;
-}
-
-.editButton:hover {
-   background-color: #2563eb;
-}
-
-.deleteButton {
-   background-color: #ef4444;
-   color: white;
-}
-
-.deleteButton:hover {
-   background-color: #dc2626;
+   gap: 0.5rem;
+   border-radius: 6px;
 }
 
 .buyButton {
@@ -236,14 +142,8 @@
 
 .buyButton:hover {
    background-color: #059669;
-}
-
-.emptyState p {
-   color: red;
-   background-color: rgba(255, 0, 0, .1);
-   padding: 1rem;
-   font-size: 0.9rem;
-   text-align: center;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
 }
 
 .emptyState {
@@ -252,31 +152,25 @@
    padding: 4rem 2rem;
    background-color: rgba(30, 41, 59, 0.5);
    border-radius: 8px;
+   border: 1px dashed #334155;
+}
+
+.emptyIcon {
+   color: #38bdf8;
+   margin-bottom: 1.5rem;
 }
 
 .emptyState h3 {
    color: #f1f5f9;
    font-size: 1.5rem;
-   margin-bottom: 0.5rem;
+   margin: 0 0 0.5rem 0;
 }
 
 .emptyState .subtext {
    color: #94a3b8;
    max-width: 400px;
    margin: 0 auto;
-}
-
-.subtext {
-   font-size: 0.9rem;
-   color: #64748b;
-}
-
-.errorIcon {
-   color: #f87171;
-}
-
-.emptyIcon {
-   color: #38bdf8;
+   line-height: 1.5;
 }
 
 @media (max-width: 960px) {
@@ -286,7 +180,7 @@
 
    .shopHeader {
       flex-direction: column;
-      align-items: stretch;
+      align-items: center;
    }
 
    .title {
@@ -294,17 +188,7 @@
       font-size: 1.8rem;
    }
 
-   .headerActions {
-      justify-content: center;
-      width: 100%;
-   }
-
-   .button {
-      flex-grow: 1;
-      justify-content: center;
-   }
-
    .productList {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: 1fr;
    }
 }

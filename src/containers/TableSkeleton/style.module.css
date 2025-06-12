@@ -1,0 +1,21 @@
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeletonRow td {
+    padding: 0.5rem 1.25rem;
+}
+
+.skeletonText {
+    height: 20px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #283446 25%, #334155 50%, #283446 75%);
+    background-size: 2000px 100%;
+    animation: shimmer 1.5s infinite;
+}
