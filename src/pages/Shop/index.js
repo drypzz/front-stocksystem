@@ -53,12 +53,14 @@ export default class Shop extends Component {
   };
 
   handleCategoryChange = (categoryId) => {
-    this.setState({ selectedCategory: categoryId });
+    this.setState({ selectedCategory: categoryId.toString() });
   };
 
   renderProducts = () => {
     const { allProducts, selectedCategory, categoriesMap } = this.state;
-    const filteredProducts = selectedCategory === 'all' ? allProducts : allProducts.filter(product => product.categoryId === selectedCategory);
+    const filteredProducts = selectedCategory === 'all' 
+      ? allProducts 
+      : allProducts.filter(product => product.categoryId.toString() === selectedCategory);
 
     if (filteredProducts.length > 0) {
       return filteredProducts.map((product) => (
@@ -99,7 +101,6 @@ export default class Shop extends Component {
         <div className={styles.shopContent}>
           <header className={styles.shopHeader}>
             <h1 className={styles.title}>Produtos</h1>
-
             <Dropdown
               icon={FiFilter}
               placeholder="Filtrar por Categoria"
@@ -111,9 +112,17 @@ export default class Shop extends Component {
           </header>
 
           <section className={styles.productListSection}>
-            {loading && <div className={styles.productList}>{[...Array(6)].map((_, index) => <ProductCardSkeleton key={index} />)}</div>}
+            {loading && <div className={styles.productList}><ProductCardSkeleton count={6} /></div>}
             {error && <div className={styles.emptyState}><p>{error}</p></div>}
-            {!loading && !error && <div className={styles.productList}>{this.renderProducts()}</div>}
+            
+            {!loading && !error && (
+              <div 
+                key={selectedCategory} 
+                className={styles.productList}
+              >
+                {this.renderProducts()}
+              </div>
+            )}
           </section>
         </div>
       </div>

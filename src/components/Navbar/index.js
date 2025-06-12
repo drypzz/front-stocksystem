@@ -53,18 +53,22 @@ export default class Navbar extends Component {
     }));
   };
 
+  closeMobileMenu = () => {
+    this.setState({ isMobileMenuOpen: false });
+  }
+
+  closeAllMenus = () => {
+    this.setState({ isMobileMenuOpen: false, isSubmenuOpen: false });
+  }
+
   toggleSubmenu = () => {
     this.setState((prevState) => ({
       isSubmenuOpen: !prevState.isSubmenuOpen,
     }));
   };
 
-  closeSubmenu = () => {
-    this.setState({ isSubmenuOpen: false });
-  };
-
   handleLogout = () => {
-    this.closeSubmenu();
+    this.closeAllMenus();
     logout();
     window.location.href = '/login';
   };
@@ -74,11 +78,6 @@ export default class Navbar extends Component {
     return user && user.name ? user.name.charAt(0).toUpperCase() : <FiUser />;
   };
 
-  getUserName = () => {
-    const { user } = this.state;
-    return user && user.name ? user.name : 'Usuário';
-  }
-
   render() {
     const { isMobileMenuOpen, authenticated, isSubmenuOpen } = this.state;
 
@@ -87,18 +86,19 @@ export default class Navbar extends Component {
 
     return (
       <header className={styles.navbar}>
-        <NavLink to="/" className={styles.brand}>STK</NavLink>
+        <NavLink to="/" className={styles.brand} onClick={this.closeMobileMenu}>
+          <img src="/gfx/logo.png" alt="Logo" className={styles.logo} />
+        </NavLink>
 
         <nav
-          className={`${styles.links} ${isMobileMenuOpen ? styles.mobileActive : ''
-            }`}
+          className={`${styles.links} ${isMobileMenuOpen ? styles.mobileActive : ''}`}
         >
-          <NavLink to="/" className={getNavLinkClass}>
+          <NavLink to="/" className={getNavLinkClass} onClick={this.closeMobileMenu}>
             <FiHome /> Home
           </NavLink>
           {authenticated ? (
             <>
-              <NavLink to="/shop" className={getNavLinkClass}>
+              <NavLink to="/shop" className={getNavLinkClass} onClick={this.closeMobileMenu}>
                 <FiShoppingCart /> Loja
               </NavLink>
               <div className={styles.avatarContainer} ref={this.submenuRef}>
@@ -106,29 +106,27 @@ export default class Navbar extends Component {
                   {this.getUserInitial()}
                 </div>
                 {isSubmenuOpen && (
-                  <>
-                    <div className={styles.submenu}>
-                      <NavLink 
-                        to="/dashboard" 
-                        className={styles.submenuLink} 
-                        onClick={this.closeSubmenu}
-                      >
-                        <FiGrid /> Dashboard
-                      </NavLink>
-                      <button onClick={this.handleLogout} className={styles.submenuLogout}>
-                        <FiLogOut /> Sair
-                      </button>
-                    </div>
-                  </>
+                  <div className={styles.submenu}>
+                    <NavLink
+                      to="/dashboard"
+                      className={styles.submenuLink}
+                      onClick={this.closeAllMenus}
+                    >
+                      <FiGrid /> Dashboard
+                    </NavLink>
+                    <button onClick={this.handleLogout} className={styles.submenuLogout}>
+                      <FiLogOut /> Sair
+                    </button>
+                  </div>
                 )}
               </div>
             </>
           ) : (
             <>
-              <NavLink to="/login" className={getNavLinkClass}>
+              <NavLink to="/login" className={getNavLinkClass} onClick={this.closeMobileMenu}>
                 <FiLogIn /> Login
               </NavLink>
-              <NavLink to="/register" className={getNavLinkClass}>
+              <NavLink to="/register" className={getNavLinkClass} onClick={this.closeMobileMenu}>
                 <FiUserPlus /> Registro
               </NavLink>
             </>
@@ -136,8 +134,7 @@ export default class Navbar extends Component {
         </nav>
 
         <div
-          className={`${styles.burger} ${isMobileMenuOpen ? styles.open : ''
-            }`}
+          className={`${styles.burger} ${isMobileMenuOpen ? styles.open : ''}`}
           onClick={this.toggleMobileMenu}
           aria-label="Alternar menu"
           aria-expanded={isMobileMenuOpen}

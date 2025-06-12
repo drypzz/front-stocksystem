@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiEye, FiEyeOff, FiUserPlus, FiLoader } from 'react-icons/fi';
 
 import styles from './style.module.css';
 
 import api from '../../services/api';
 
 export default class Register extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +17,7 @@ export default class Register extends Component {
       showPassword: false,
       showConfirmPassword: false,
       error: '',
+      isLoading: false,
     };
   }
 
@@ -35,17 +35,24 @@ export default class Register extends Component {
     e.preventDefault();
     const { name, email, password, confirmPassword } = this.state;
 
+    this.setState({ isLoading: true, error: '' });
+
     if (password !== confirmPassword) {
-      this.setState({ error: 'As senhas não coincidem.' });
+      this.setState({ error: 'As senhas não coincidem.', isLoading: false });
       return;
     }
 
     try {
-      await api.post('/register', { name, email, password })
-      window.location.href = '/login';
+      await api.post('/register', { name, email, password });
+
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1500);
+
     } catch (err) {
       this.setState({
         error: err.response?.data?.message || 'Erro ao registrar.',
+        isLoading: false,
       });
     }
   };
@@ -59,6 +66,7 @@ export default class Register extends Component {
       showPassword,
       showConfirmPassword,
       error,
+      isLoading,
     } = this.state;
 
     return (
@@ -76,7 +84,8 @@ export default class Register extends Component {
               id="name"
               value={name}
               onChange={this.handleChange}
-              placeholder="Seu nome completo"
+              placeholder="Seu nome"
+              disabled={isLoading}
             />
           </div>
 
@@ -88,7 +97,8 @@ export default class Register extends Component {
               id="email"
               value={email}
               onChange={this.handleChange}
-              placeholder="email@exemplo.com"
+              placeholder="exemplo@email.com"
+              disabled={isLoading}
             />
           </div>
 
@@ -102,17 +112,15 @@ export default class Register extends Component {
                 value={password}
                 onChange={this.handleChange}
                 placeholder="••••••••"
+                disabled={isLoading}
               />
               <button
                 type="button"
                 className={styles.iconButton}
                 onClick={() => this.togglePasswordVisibility('showPassword')}
+                disabled={isLoading}
               >
-                {showPassword ?
-                  <FiEye size={18} />
-                  :
-                  <FiEyeOff size={18} />
-                }
+                {showPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
               </button>
             </div>
           </div>
@@ -127,25 +135,29 @@ export default class Register extends Component {
                 value={confirmPassword}
                 onChange={this.handleChange}
                 placeholder="••••••••"
+                disabled={isLoading}
               />
               <button
                 type="button"
                 className={styles.iconButton}
-                onClick={() =>
-                  this.togglePasswordVisibility('showConfirmPassword')
-                }
+                onClick={() => this.togglePasswordVisibility('showConfirmPassword')}
+                disabled={isLoading}
               >
-                {showConfirmPassword ? (
-                  <FiEye size={18} />
-                ) : (
-                  <FiEyeOff size={18} />
-                )}
+                {showConfirmPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
               </button>
             </div>
           </div>
 
-          <button type="submit" className={styles.button}>
-            Registrar
+          <button type="submit" className={styles.button} disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <FiLoader className={styles.spinner} /> Registrando...
+              </>
+            ) : (
+              <>
+                <FiUserPlus /> Registrar
+              </>
+            )}
           </button>
 
           <p className={styles.link}>

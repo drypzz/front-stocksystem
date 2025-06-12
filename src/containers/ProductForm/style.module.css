@@ -1,3 +1,17 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
 .form {
    background-color: transparent;
    color: #f1f5f9;
@@ -66,18 +80,26 @@
    border-radius: 6px;
    font-weight: bold;
    cursor: pointer;
-   transition: background-color 0.3s;
+   transition: all 0.2s ease;
    margin-top: 1rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 0.5rem;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
    background-color: #0ea5e9;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);
 }
 
 .button:disabled {
    background-color: #334155;
    color: #9ca3af;
    cursor: not-allowed;
+   transform: none;
+   box-shadow: none;
 }
 
 .error {

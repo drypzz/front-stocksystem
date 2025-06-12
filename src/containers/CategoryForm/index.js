@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { FiSave, FiPlus, FiLoader } from 'react-icons/fi';
+
 import api from '../../services/api';
 
 import styles from './style.module.css';
@@ -14,7 +16,7 @@ export default class CategoryForm extends Component {
       category: props.categoryToEdit || this.initialState.category,
       error: null,
       success: null,
-      loading: false,
+      isLoading: false,
     };
   }
 
@@ -30,13 +32,13 @@ export default class CategoryForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ error: null, success: null, loading: true });
+    this.setState({ error: null, success: null, isLoading: true });
 
     const { category } = this.state;
     const isEditing = !!category.id;
 
     if (!category.name.trim()) {
-      this.setState({ error: 'O nome da categoria é obrigatório.', loading: false });
+      this.setState({ error: 'O nome da categoria é obrigatório.', isLoading: false });
       return;
     }
 
@@ -49,7 +51,7 @@ export default class CategoryForm extends Component {
 
       this.setState({
         success: `Categoria "${category.name}" ${isEditing ? 'atualizada' : 'cadastrada'} com sucesso!`,
-        loading: false,
+        isLoading: false,
       });
 
       setTimeout(() => {
@@ -60,7 +62,7 @@ export default class CategoryForm extends Component {
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || `Falha ao ${isEditing ? 'atualizar' : 'cadastrar'} categoria.`;
-      this.setState({ error: errorMessage, loading: false });
+      this.setState({ error: errorMessage, isLoading: false });
       console.error(`Erro ao ${isEditing ? 'atualizar' : 'cadastrar'} categoria:`, err);
     }
   };
@@ -68,18 +70,17 @@ export default class CategoryForm extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.show && !prevProps.show) {
       const categoryToEdit = this.props.categoryToEdit;
-
       this.setState({
         category: categoryToEdit || this.initialState.category,
         error: null,
         success: null,
-        loading: false,
+        isLoading: false,
       });
     }
   }
 
   render() {
-    const { category, error, success, loading } = this.state;
+    const { category, error, success, isLoading } = this.state;
     const isEditing = !!category.id;
 
     return (
@@ -90,19 +91,31 @@ export default class CategoryForm extends Component {
         {success && <div className={styles.success}>{success}</div>}
 
         <div className={styles.inputGroup}>
-          <label htmlFor="categoryName">Nome da Categoria</label>
+          <label htmlFor="categoryName">Nome da Categoria *</label>
           <input
             type="text"
             id="categoryName"
+            name="name"
             value={category.name || ''}
             onChange={this.handleChange}
             placeholder="Ex: Eletrônicos"
-            disabled={loading}
+            disabled={isLoading}
+            autoComplete="off"
           />
         </div>
 
-        <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? (isEditing ? 'Salvando...' : 'Cadastrando...') : (isEditing ? 'Salvar Alterações' : 'Cadastrar')}
+        <button type="submit" className={styles.button} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <FiLoader className={styles.spinner} />
+              {isEditing ? 'Salvando...' : 'Cadastrando...'}
+            </>
+          ) : (
+            <>
+              {isEditing ? <FiSave /> : <FiPlus />}
+              {isEditing ? 'Salvar Alterações' : 'Cadastrar Produto'}
+            </>
+          )}
         </button>
       </form>
     );

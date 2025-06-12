@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import api from '../../services/api';
-import styles from './style.module.css';
 
-// 1. Importe o componente Dropdown
+import { FiPlus, FiSave, FiLoader } from 'react-icons/fi';
+
 import Dropdown from '../../components/Dropdown';
+
+import api from '../../services/api';
+
+import styles from './style.module.css';
 
 export default class ProductForm extends Component {
     constructor(props) {
@@ -20,7 +23,6 @@ export default class ProductForm extends Component {
         };
     }
 
-    // ... (fetchCategories continua igual) ...
     fetchCategories = async () => {
         try {
             const response = await api.get('/category');
@@ -43,8 +45,6 @@ export default class ProductForm extends Component {
         }));
     };
 
-    // 2. Crie um handler específico para o Dropdown
-    // Ele recebe o ID da categoria diretamente, não um evento 'e'.
     handleCategoryChange = (categoryId) => {
         this.setState(prevState => ({
             product: { ...prevState.product, categoryId: categoryId },
@@ -52,7 +52,6 @@ export default class ProductForm extends Component {
     };
 
     handleSubmit = async (e) => {
-        // ... (handleSubmit continua igual) ...
         e.preventDefault();
         this.setState({ isLoading: true, error: null, success: null });
         const { product } = this.state;
@@ -88,7 +87,6 @@ export default class ProductForm extends Component {
         }
     };
 
-    // ... (componentDidMount e componentDidUpdate continuam iguais) ...
     componentDidMount() {
         if (!this.props.categories || this.props.categories.length === 0) {
             this.fetchCategories();
@@ -116,6 +114,7 @@ export default class ProductForm extends Component {
         }
     }
 
+
     render() {
         const { product, categories, isLoading, error, success } = this.state;
         const isEditing = !!product.id;
@@ -129,27 +128,26 @@ export default class ProductForm extends Component {
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="name">Nome do Produto *</label>
-                    <input type="text" id="name" name="name" autoComplete="off" value={product.name || ''} onChange={this.handleChange} />
+                    <input type="text" id="name" name="name" autoComplete="off" value={product.name || ''} onChange={this.handleChange} disabled={isLoading} />
                 </div>
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="description">Descrição *</label>
-                    <textarea id="description" name="description" autoComplete="off" value={product.description || ''} onChange={this.handleChange} rows="3"></textarea>
+                    <textarea id="description" name="description" autoComplete="off" value={product.description || ''} onChange={this.handleChange} rows="3" disabled={isLoading}></textarea>
                 </div>
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="price">Preço *</label>
-                    <input type="number" id="price" name="price" autoComplete="off" value={product.price || ''} onChange={this.handleChange} step="0.01" placeholder="Ex: 19.99" />
+                    <input type="number" id="price" name="price" autoComplete="off" value={product.price || ''} onChange={this.handleChange} step="0.01" placeholder="Ex: 19.99" disabled={isLoading} />
                 </div>
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="quantity">Quantidade em Estoque *</label>
-                    <input type="number" id="quantity" name="quantity" autoComplete="off" value={product.quantity || ''} onChange={this.handleChange} />
+                    <input type="number" id="quantity" name="quantity" autoComplete="off" value={product.quantity || ''} onChange={this.handleChange} disabled={isLoading} />
                 </div>
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="categoryId">Categoria *</label>
-                    {/* 3. Substitua o <select> pelo <Dropdown> */}
                     <Dropdown
                         options={categories}
                         value={product.categoryId}
@@ -160,7 +158,17 @@ export default class ProductForm extends Component {
                 </div>
 
                 <button type="submit" className={styles.button} disabled={isLoading}>
-                    {isLoading ? (isEditing ? 'Salvando...' : 'Cadastrando...') : (isEditing ? 'Salvar Alterações' : 'Cadastrar Produto')}
+                    {isLoading ? (
+                        <>
+                            <FiLoader className={styles.spinner} />
+                            {isEditing ? 'Salvando...' : 'Cadastrando...'}
+                        </>
+                    ) : (
+                        <>
+                            {isEditing ? <FiSave /> : <FiPlus />}
+                            {isEditing ? 'Salvar Alterações' : 'Cadastrar Produto'}
+                        </>
+                    )}
                 </button>
             </form>
         );

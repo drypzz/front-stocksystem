@@ -1,15 +1,26 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
   padding: 2rem;
   text-align: center;
 }
 
 .mainContent {
-  background-color: rgba(30, 41, 59, 0.5);
+  background-color: rgba(30, 41, 59, 0.6);
   padding: 3rem 4rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   max-width: 800px;
@@ -17,24 +28,27 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #334155;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
 }
 
 .mainTitle {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #38bdf8;
-  text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+  animation: fadeInUp 0.8s ease-out backwards;
 }
 
 .mainDescription {
   font-size: 1.1rem;
   color: #cbd5e1;
-  line-height: 1.6;
-  max-width: 90%;
+  line-height: 1.7;
+  max-width: 600px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out backwards;
+  animation-delay: 0.2s;
 }
 
 .mainButton {
@@ -42,24 +56,27 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.85rem 2rem;
-  margin-top: 1rem;
+  padding: 1rem 2.5rem;
+  margin-top: 1.5rem;
   background-color: #38bdf8;
   color: #0f172a;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
   align-self: center;
+  animation: fadeInUp 0.8s ease-out backwards;
+  animation-delay: 0.4s;
 }
 
 .mainButton:hover {
-  background-color: #0ea5e9;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+  background-color: #f1f5f9;
+  color: #0f172a;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
 }
 
 .mainButton svg {
@@ -68,4 +85,24 @@
 
 .mainButton:hover svg {
   transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 2.5rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .mainTitle {
+    font-size: 2.2rem;
+  }
+
+  .mainDescription {
+    font-size: 1rem;
+  }
+
+  .mainButton {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+  }
 }
