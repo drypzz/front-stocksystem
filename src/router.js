@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
+import Dashboard from './pages/Dashboard';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
@@ -21,6 +22,7 @@ const RouterComponent = () => (
             <Route path='/' element={<Main />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path='/shop' element={<PrivateRoute element={<Shop />} />} />
             <Route path='*' element={<NotFound />} />
         </Routes>

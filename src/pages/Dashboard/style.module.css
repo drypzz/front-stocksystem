@@ -1,0 +1,172 @@
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: #0f172a; /* Cor de fundo sólida para o painel */
+    padding: 2rem 1.5rem;
+}
+
+.dashboardContent {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.mainHeader {
+    width: 100%;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #334155;
+}
+
+.mainTitle {
+    font-size: 2.25rem;
+    color: #f1f5f9;
+}
+
+.tableSection {
+    width: 100%;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.sectionHeader h2 {
+    font-size: 1.75rem;
+    color: #cbd5e1;
+    margin: 0;
+}
+
+.button {
+    background-color: #38bdf8;
+    color: #0f172a;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+    background-color: #0ea5e9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);
+}
+
+.button:disabled {
+    background-color: #334155;
+    cursor: not-allowed;
+}
+
+.tableContainer {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    overflow: hidden; /* Para o border-radius funcionar com a tabela */
+}
+
+.table {
+   width: 100%;
+   border-collapse: collapse;
+   color: #cbd5e1;
+}
+
+.table th, .table td {
+   padding: 1rem 1.25rem;
+   text-align: left;
+   border-bottom: 1px solid #334155;
+}
+
+.table thead {
+   background-color: #283446;
+}
+
+.table th {
+   font-size: 0.8rem;
+   text-transform: uppercase;
+   letter-spacing: 0.05em;
+   color: #94a3b8;
+}
+
+.table tbody tr {
+   transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+   background-color: #283446;
+}
+
+.table tbody tr:last-child td {
+   border-bottom: none;
+}
+
+.actionsCell {
+   display: flex;
+   align-items: center;
+   gap: 0.75rem;
+}
+
+.tableButton {
+   background: transparent;
+   border: 1px solid #475569;
+   color: #94a3b8;
+   padding: 0.5rem;
+   border-radius: 6px;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: all 0.2s ease;
+}
+
+.tableButton:hover {
+   border-color: #f1f5f9;
+   color: #f1f5f9;
+}
+
+.editButton:hover {
+   border-color: #38bdf8;
+   color: #38bdf8;
+}
+
+.deleteButton:hover {
+   border-color: #ef4444;
+   color: #ef4444;
+}
+
+.emptyText, .errorBanner {
+   text-align: center;
+   padding: 2rem;
+   color: #94a3b8;
+}
+
+.errorBanner {
+   background-color: rgba(239, 68, 68, 0.1);
+   color: #fca5a5;
+   border: 1px solid #ef4444;
+   border-radius: 8px;
+}
+
+.skeletonRow td {
+   padding: 0.5rem 1.25rem;
+}
+
+.skeletonText {
+   height: 20px;
+   border-radius: 4px;
+   background: linear-gradient(90deg, #283446 25%, #334155 50%, #283446 75%);
+   background-size: 2000px 100%;
+   animation: shimmer 1.5s infinite;
+}
