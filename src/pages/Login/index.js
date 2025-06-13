@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { FiEye, FiEyeOff, FiLogIn, FiLoader } from 'react-icons/fi';
+import { FiEye, FiEyeOff, FiLogIn, FiLoader } from "react-icons/fi";
 
-import api from '../../services/api';
-import { login, isAuthenticated } from '../../services/auth';
+import api from "../../services/api";
 
-import styles from './style.module.css';
+import { login, isAuthenticated } from "../../services/auth";
+
+import ToastService from "../../services/toastservice";
+
+import styles from "./style.module.css";
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       showPassword: false,
-      error: '',
       isLoading: false,
     };
   }
 
   componentDidMount() {
     if (isAuthenticated()) {
-      window.location.href = '/shop';
+      window.location.href = "/shop";
     }
   }
 
@@ -30,43 +32,44 @@ export default class Login extends Component {
   };
 
   togglePasswordVisibility = () => {
-    this.setState((prev) => ({
-      showPassword: !prev.showPassword,
-    }));
+    this.setState((prev) => ({ showPassword: !prev.showPassword }));
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = this.state;
 
-    this.setState({ isLoading: true, error: '' });
+    if (!email || !password) {
+      ToastService.show({ type: "error", message: "Por favor, preencha o email e a senha." });
+      return;
+    }
+
+    this.setState({ isLoading: true });
 
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post("/login", { email, password });
       const { token, user } = response.data;
-      login(token, user);
 
+      login(token, user);
+      
       setTimeout(() => {
-        window.location.href = '/shop';
+        window.location.href = "/shop";
       }, 1500);
 
     } catch (err) {
-      this.setState({
-        error: err.response?.data?.message || 'Erro ao fazer login.',
-        isLoading: false,
-      });
+      const message = err.response?.data?.message || "Email ou senha inválidos. Tente novamente.";
+      ToastService.show({ type: "error", message });
+      this.setState({ isLoading: false });
     }
   };
 
   render() {
-    const { email, password, showPassword, error, isLoading } = this.state;
+    const { email, password, showPassword, isLoading } = this.state;
 
     return (
       <div className={styles.container}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <h2 className={styles.title}>Entrar</h2>
-
-          {error && <p className={styles.error}>{error}</p>}
 
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
@@ -78,6 +81,7 @@ export default class Login extends Component {
               onChange={this.handleChange}
               placeholder="exemplo@email.com"
               disabled={isLoading}
+              autoComplete="email"
             />
           </div>
 
@@ -85,13 +89,14 @@ export default class Login extends Component {
             <label htmlFor="password">Senha</label>
             <div className={styles.passwordWrapper}>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 name="password"
                 id="password"
                 value={password}
                 onChange={this.handleChange}
                 placeholder="••••••••"
                 disabled={isLoading}
+                autoComplete="current-password"
               />
               <button
                 type="button"
@@ -107,13 +112,9 @@ export default class Login extends Component {
 
           <button type="submit" className={styles.button} disabled={isLoading}>
             {isLoading ? (
-              <>
-                <FiLoader className={styles.spinner} /> Entrando...
-              </>
+              <><FiLoader className={styles.spinner} /> Entrando...</>
             ) : (
-              <>
-                <FiLogIn /> Entrar
-              </>
+              <><FiLogIn /> Entrar</>
             )}
           </button>
 
@@ -123,5 +124,5 @@ export default class Login extends Component {
         </form>
       </div>
     );
-  }
-}
+  };
+};

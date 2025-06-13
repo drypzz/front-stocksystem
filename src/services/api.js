@@ -1,18 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { logout } from './auth';
+import { logout } from "./auth";
 
-const API_BASE_URL = 'http://localhost:3001/api/v1';
+const API_BASE_URL = "http://localhost:3001/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem("authToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -20,11 +20,11 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use((response) => response, (error) => {
-  const isTokenExpired = error.response?.status === 401 && error.response?.data?.message?.toLowerCase().includes('token expirado.');
+  const isTokenExpired = error.response?.status === 401 && error.response?.data?.message?.toLowerCase().includes("token expirado.");
 
   if (isTokenExpired) {
     logout();
-    window.location.href = '/login';
+    window.location.href = "/login";
   }
 
   return Promise.reject(error);

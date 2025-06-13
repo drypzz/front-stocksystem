@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown } from "react-icons/fi";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 export default class Dropdown extends Component {
   constructor(props) {
@@ -14,13 +14,13 @@ export default class Dropdown extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
-    document.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-    document.removeEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
 
   handleClickOutside = (event) => {
@@ -30,7 +30,7 @@ export default class Dropdown extends Component {
   };
 
   handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       this.setState({ isOpen: false });
     }
   };
@@ -54,7 +54,7 @@ export default class Dropdown extends Component {
     const selectedOption = options.find(opt => opt.id.toString() === value.toString());
     const displayLabel = selectedOption ? selectedOption.name : placeholder;
 
-    const containerClasses = `${styles.dropdownContainer} ${disabled ? styles.disabled : ''}`;
+    const containerClasses = `${styles.dropdownContainer} ${disabled ? styles.disabled : ""}`;
 
     return (
       <div
@@ -66,14 +66,14 @@ export default class Dropdown extends Component {
         <span className={styles.dropdownDisplay} title={displayLabel}>
           {displayLabel}
         </span>
-        <FiChevronDown className={`${styles.chevronIcon} ${isOpen ? styles.chevronOpen : ''}`} />
+        <FiChevronDown className={`${styles.chevronIcon} ${isOpen ? styles.chevronOpen : ""}`} />
 
         {isOpen && !disabled && (
           <ul className={styles.dropdownMenu}>
             {options.map(option => (
               <li
                 key={option.id}
-                className={`${styles.dropdownMenuItem} ${value.toString() === option.id.toString() ? styles.activeItem : ''}`}
+                className={`${styles.dropdownMenuItem} ${value.toString() === option.id.toString() ? styles.activeItem : ""}`}
                 onClick={(event) => this.handleSelect(event, option.id)}
                 title={option.name}
               >

@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { FiEye, FiEyeOff, FiUserPlus, FiLoader } from 'react-icons/fi';
+import { FiEye, FiEyeOff, FiUserPlus, FiLoader } from "react-icons/fi";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
-import styles from './style.module.css';
+import ToastService from "../../services/toastservice";
+
+import styles from "./style.module.css";
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       showPassword: false,
       showConfirmPassword: false,
-      error: '',
       isLoading: false,
     };
   }
@@ -26,55 +27,52 @@ export default class Register extends Component {
   };
 
   togglePasswordVisibility = (field) => {
-    this.setState((prev) => ({
-      [field]: !prev[field],
-    }));
+    this.setState((prev) => ({ [field]: !prev[field] }));
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = this.state;
 
-    this.setState({ isLoading: true, error: '' });
-
-    if (password !== confirmPassword) {
-      this.setState({ error: 'As senhas não coincidem.', isLoading: false });
+    if (!name || !email || !password || !confirmPassword) {
+      ToastService.show({ type: "error", message: "Por favor, preencha todos os campos." });
       return;
     }
 
+    if (password !== confirmPassword) {
+      ToastService.show({
+        key: "password-mismatch",
+        type: "error",
+        message: "As senhas não coincidem."
+      });
+      return;
+    }
+
+    this.setState({ isLoading: true });
+
     try {
-      await api.post('/register', { name, email, password });
+      await api.post("/register", { name, email, password });
+
+      ToastService.show({ type: "success", message: "Cadastro realizado com sucesso! Redirecionando para o login..." });
 
       setTimeout(() => {
-        window.location.href = '/login';
-      }, 1500);
+        window.location.href = "/login";
+      }, 2000);
 
     } catch (err) {
-      this.setState({
-        error: err.response?.data?.message || 'Erro ao registrar.',
-        isLoading: false,
-      });
+      const message = err.response?.data?.message || "Erro ao realizar o cadastro. Tente novamente.";
+      ToastService.show({ type: "error", message });
+      this.setState({ isLoading: false });
     }
   };
 
   render() {
-    const {
-      name,
-      email,
-      password,
-      confirmPassword,
-      showPassword,
-      showConfirmPassword,
-      error,
-      isLoading,
-    } = this.state;
+    const { name, email, password, confirmPassword, showPassword, showConfirmPassword, isLoading } = this.state;
 
     return (
       <div className={styles.container}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <h2 className={styles.title}>Registrar-se</h2>
-
-          {error && <p className={styles.error}>{error}</p>}
 
           <div className={styles.inputGroup}>
             <label htmlFor="name">Nome</label>
@@ -84,8 +82,9 @@ export default class Register extends Component {
               id="name"
               value={name}
               onChange={this.handleChange}
-              placeholder="Seu nome"
+              placeholder="Seu nome completo"
               disabled={isLoading}
+              autoComplete="name"
             />
           </div>
 
@@ -99,6 +98,7 @@ export default class Register extends Component {
               onChange={this.handleChange}
               placeholder="exemplo@email.com"
               disabled={isLoading}
+              autoComplete="email"
             />
           </div>
 
@@ -106,20 +106,16 @@ export default class Register extends Component {
             <label htmlFor="password">Senha</label>
             <div className={styles.passwordWrapper}>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 name="password"
                 id="password"
                 value={password}
                 onChange={this.handleChange}
                 placeholder="••••••••"
                 disabled={isLoading}
+                autoComplete="new-password"
               />
-              <button
-                type="button"
-                className={styles.iconButton}
-                onClick={() => this.togglePasswordVisibility('showPassword')}
-                disabled={isLoading}
-              >
+              <button type="button" className={styles.iconButton} onClick={() => this.togglePasswordVisibility("showPassword")} disabled={isLoading}>
                 {showPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
               </button>
             </div>
@@ -129,20 +125,16 @@ export default class Register extends Component {
             <label htmlFor="confirmPassword">Confirmar Senha</label>
             <div className={styles.passwordWrapper}>
               <input
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={this.handleChange}
                 placeholder="••••••••"
                 disabled={isLoading}
+                autoComplete="new-password"
               />
-              <button
-                type="button"
-                className={styles.iconButton}
-                onClick={() => this.togglePasswordVisibility('showConfirmPassword')}
-                disabled={isLoading}
-              >
+              <button type="button" className={styles.iconButton} onClick={() => this.togglePasswordVisibility("showConfirmPassword")} disabled={isLoading}>
                 {showConfirmPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
               </button>
             </div>
@@ -150,13 +142,9 @@ export default class Register extends Component {
 
           <button type="submit" className={styles.button} disabled={isLoading}>
             {isLoading ? (
-              <>
-                <FiLoader className={styles.spinner} /> Registrando...
-              </>
+              <><FiLoader className={styles.spinner} /> Registrando...</>
             ) : (
-              <>
-                <FiUserPlus /> Registrar
-              </>
+              <><FiUserPlus /> Registrar</>
             )}
           </button>
 

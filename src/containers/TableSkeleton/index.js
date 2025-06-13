@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 export default class TableSkeleton extends Component {
     static defaultProps = {
         rows: 3,
-        columns: [{ width: '100%' }],
+        columns: [{ width: "100%" }],
     };
 
     render() {
@@ -17,7 +17,7 @@ export default class TableSkeleton extends Component {
                     <td key={`skeleton-col-${colIndex}`}>
                         <div
                             className={styles.skeletonText}
-                            style={{ width: col.width || '80%' }}
+                            style={{ width: col.width || "80%" }}
                         >
                         </div>
                     </td>

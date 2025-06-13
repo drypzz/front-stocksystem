@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { FiFilter, FiInfo, FiShoppingCart } from 'react-icons/fi';
+import { FiFilter, FiInfo, FiShoppingCart, FiAlertTriangle } from "react-icons/fi";
 
-import ProductCardSkeleton from '../../containers/ProductCardSkeleton';
+import ProductCardSkeleton from "../../containers/ProductCardSkeleton";
 
-import Dropdown from '../../components/Dropdown';
+import Dropdown from "../../components/Dropdown";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 export default class Shop extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class Shop extends Component {
       allProducts: [],
       categoriesList: [],
       categoriesMap: {},
-      selectedCategory: 'all',
+      selectedCategory: "all",
       loading: true,
       error: null,
     };
@@ -31,13 +31,13 @@ export default class Shop extends Component {
     this.setState({ loading: true, error: null });
     try {
       const [productsResponse, categoriesResponse] = await Promise.all([
-        api.get('/product'),
-        api.get('/category'),
+        api.get("/product"),
+        api.get("/category"),
       ]);
 
       const categoriesList = categoriesResponse.data?.categories || categoriesResponse.data || [];
       const categoriesMap = {
-        'all': 'Todas as Categorias',
+        "all": "Todas as Categorias",
         ...categoriesList.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.name }), {})
       };
 
@@ -50,7 +50,7 @@ export default class Shop extends Component {
       });
     } catch (err) {
       this.setState({
-        error: err.response?.data?.message || 'Erro ao carregar os dados. Tente novamente mais tarde.',
+        error: err.response?.data?.message || "Erro ao carregar os dados. Verifique sua conexão.",
         loading: false,
       });
     }
@@ -62,8 +62,8 @@ export default class Shop extends Component {
 
   renderProducts = () => {
     const { allProducts, selectedCategory, categoriesMap } = this.state;
-    const filteredProducts = selectedCategory === 'all' 
-      ? allProducts 
+    const filteredProducts = selectedCategory === "all"
+      ? allProducts
       : allProducts.filter(product => product.categoryId.toString() === selectedCategory);
 
     if (filteredProducts.length > 0) {
@@ -71,11 +71,11 @@ export default class Shop extends Component {
         <div key={product.id} className={styles.productCard}>
           <div className={styles.productCardHeader}>
             <h3>{product.name}</h3>
-            <span className={styles.productCategory}>{categoriesMap[product.categoryId] || 'Sem Categoria'}</span>
+            <span className={styles.productCategory}>{categoriesMap[product.categoryId] || "Sem Categoria"}</span>
           </div>
           <p className={styles.productDescription}>{product.description}</p>
           <div className={styles.productCardFooter}>
-            <span className={styles.productPrice}>{Number(product.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <span className={styles.productPrice}>{Number(product.price).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
             <span className={styles.productQuantity}>{`${product.quantity} unidades`}</span>
           </div>
           <div className={styles.productActions}>
@@ -91,14 +91,14 @@ export default class Shop extends Component {
       <div className={styles.emptyState}>
         <FiInfo className={styles.emptyIcon} size={48} />
         <h3>Nenhum produto encontrado</h3>
-        <p className={styles.subtext}>{selectedCategory === 'all' ? 'Parece que não há produtos cadastrados ainda.' : 'Tente selecionar outra categoria.'}</p>
+        <p className={styles.subtext}>{selectedCategory === "all" ? "Parece que não há produtos cadastrados ainda." : "Tente selecionar outra categoria."}</p>
       </div>
     );
   };
 
   render() {
     const { loading, error, categoriesList, selectedCategory } = this.state;
-    const categoryOptions = [{ id: 'all', name: 'Todas as Categorias' }, ...categoriesList];
+    const categoryOptions = [{ id: "all", name: "Todas as Categorias" }, ...categoriesList];
 
     return (
       <div className={styles.container}>
@@ -111,21 +111,33 @@ export default class Shop extends Component {
               options={categoryOptions}
               value={selectedCategory}
               onChange={this.handleCategoryChange}
-              disabled={loading}
+              disabled={loading || !!error}
             />
           </header>
 
           <section className={styles.productListSection}>
-            {loading && <div className={styles.productList}>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <ProductCardSkeleton key={index} />
-              ))}
-            </div>}
-            {error && <div className={styles.emptyState}><p>{error}</p></div>}
-            
+            {loading && (
+              <div className={styles.productList}>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <ProductCardSkeleton key={index} />
+                ))}
+              </div>
+            )}
+
+            {error && !loading && (
+              <div className={styles.errorState}>
+                <FiAlertTriangle className={styles.errorIcon} size={40} />
+                <h3>Ocorreu um Erro</h3>
+                <p>{error}</p>
+                <button className={styles.retryButton} onClick={this.loadData}>
+                  Tentar Novamente
+                </button>
+              </div>
+            )}
+
             {!loading && !error && (
-              <div 
-                key={selectedCategory} 
+              <div
+                key={selectedCategory}
                 className={styles.productList}
               >
                 {this.renderProducts()}

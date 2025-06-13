@@ -157,13 +157,3 @@
 .iconButton:hover {
   color: #38bdf8;
 }
-
-.error {
-  color: #fca5a5;
-  background-color: rgba(239, 68, 68, 0.15);
-  padding: 0.75rem 1rem;
-  border: 1px solid #ef4444;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  text-align: center;
-}

@@ -1,0 +1,162 @@
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.toastContainer {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toast {
+    width: 350px;
+    max-width: 90vw;
+    background-color: #1e293b;
+    color: #f1f5f9;
+    border-left: 5px solid #64748b;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: toast-in 0.5s forwards;
+    position: relative;
+}
+
+.toast.exiting {
+    animation: toast-out 0.5s forwards;
+}
+
+.toastIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.toastContent p {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.toastContent .confirmText {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s;
+}
+
+.closeButton:hover {
+    color: #f1f5f9;
+}
+
+.toast.success {
+    border-left-color: #10b981;
+}
+
+.toast.success .toastIcon {
+    color: #10b981;
+}
+
+.toast.error {
+    border-left-color: #ef4444;
+}
+
+.toast.error .toastIcon {
+    color: #ef4444;
+}
+
+.toast.info {
+    border-left-color: #38bdf8;
+}
+
+.toast.info .toastIcon {
+    color: #38bdf8;
+}
+
+.toast.confirm {
+    border-left-color: #f59e0b;
+}
+
+.toast.confirm .toastIcon {
+    color: #f59e0b;
+}
+
+.confirmActions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.confirmButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.confirmButton:hover {
+    opacity: 0.85;
+}
+
+.confirmButton.primary {
+    background-color: #f59e0b;
+    color: #1e293b;
+}
+
+.confirmButton.secondary {
+    background-color: #334155;
+    color: #f1f5f9;
+}
+
+@media (max-width: 960px) {
+    .toastContainer {
+        top: 20px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 90vw;
+    }
+
+    .toast {
+        width: 100%;
+    }
+}

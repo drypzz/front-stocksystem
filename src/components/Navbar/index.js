@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 import {
   FiHome,
@@ -9,11 +9,11 @@ import {
   FiLogOut,
   FiUser,
   FiGrid
-} from 'react-icons/fi';
+} from "react-icons/fi";
 
-import { isAuthenticated, logout, getUser } from '../../services/auth';
+import { isAuthenticated, logout, getUser } from "../../services/auth";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -35,11 +35,11 @@ export default class Navbar extends Component {
       this.setState({ user: getUser() });
     }
 
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   handleClickOutside = (event) => {
@@ -71,7 +71,7 @@ export default class Navbar extends Component {
   handleLogout = () => {
     this.closeAllMenus();
     logout();
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   getUserInitial = () => {
@@ -83,7 +83,7 @@ export default class Navbar extends Component {
     const { isMobileMenuOpen, authenticated, isSubmenuOpen } = this.state;
 
     const getNavLinkClass = ({ isActive }) =>
-      `${styles.link} ${isActive ? styles.active : ''}`;
+      `${styles.link} ${isActive ? styles.active : ""}`;
 
     return (
       <header className={styles.navbar}>
@@ -92,7 +92,7 @@ export default class Navbar extends Component {
         </NavLink>
 
         <nav
-          className={`${styles.links} ${isMobileMenuOpen ? styles.mobileActive : ''}`}
+          className={`${styles.links} ${isMobileMenuOpen ? styles.mobileActive : ""}`}
         >
           <NavLink to="/" className={getNavLinkClass} onClick={this.closeMobileMenu}>
             <FiHome /> Home
@@ -135,7 +135,7 @@ export default class Navbar extends Component {
         </nav>
 
         <div
-          className={`${styles.burger} ${isMobileMenuOpen ? styles.open : ''}`}
+          className={`${styles.burger} ${isMobileMenuOpen ? styles.open : ""}`}
           onClick={this.toggleMobileMenu}
           aria-label="Alternar menu"
           aria-expanded={isMobileMenuOpen}

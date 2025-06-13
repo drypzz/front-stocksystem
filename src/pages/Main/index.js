@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight } from "react-icons/fi";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 export default class Main extends Component {
 

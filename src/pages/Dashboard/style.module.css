@@ -38,6 +38,54 @@
     color: #f1f5f9;
 }
 
+.errorState {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    width: 100%;
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.errorState .errorIcon {
+    color: #ef4444;
+}
+
+.errorState h3 {
+    color: #f87171;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.errorState p {
+    max-width: 500px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.retryButton {
+    margin-top: 0.5rem;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.retryButton:hover {
+    background-color: #dc2626;
+}
+
 .tableSection {
     width: 100%;
     animation: fadeInUp 0.5s ease-out backwards;
@@ -81,6 +129,7 @@
 
 .button:disabled {
     background-color: #334155;
+    color: #64748b;
     cursor: not-allowed;
 }
 
@@ -103,6 +152,7 @@
     padding: 1rem 1.25rem;
     text-align: left;
     border-bottom: 1px solid #334155;
+    white-space: nowrap;
 }
 
 .table th {
@@ -162,19 +212,18 @@
     color: #ef4444;
 }
 
-.emptyText,
-.errorBanner {
+.tableEmptyState {
+    background-color: #1e293b;
+    border: 1px dashed #334155;
+    border-radius: 8px;
+    padding: 3rem;
     text-align: center;
-    padding: 2rem;
-    color: #94a3b8;
+    color: #64748b;
 }
 
-.errorBanner {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #fca5a5;
-    border: 1px solid #ef4444;
-    border-radius: 8px;
-    animation: fadeInUp 0.5s ease-out backwards;
+.tableEmptyState h3 {
+    color: #94a3b8;
+    margin: 0.5rem 0 0 0;
 }
 
 .headerTitleAndFilter {
