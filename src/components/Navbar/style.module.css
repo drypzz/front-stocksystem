@@ -192,6 +192,29 @@
   color: #ef4444;
 }
 
+.cartLinkContainer {
+  position: relative; 
+}
+
+.cartCount {
+  background-color: #ef4444; 
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  position: absolute; 
+  top: 0;
+  right: 0;
+  transform: translate(40%, -40%);
+  border: 2px solid #1e293b; 
+  line-height: 1; 
+}
+
 @media (max-width: 960px) {
   .brand {
     height: 35px;

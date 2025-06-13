@@ -8,14 +8,18 @@ import {
   FiUserPlus,
   FiLogOut,
   FiUser,
-  FiGrid
+  FiGrid,
+  FiArchive 
 } from "react-icons/fi";
 
 import { isAuthenticated, logout, getUser } from "../../services/auth";
+import { CartContext } from "../../contexts/CartContext";
 
 import styles from "./style.module.css";
 
 export default class Navbar extends Component {
+  static contextType = CartContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -71,7 +75,7 @@ export default class Navbar extends Component {
   handleLogout = () => {
     this.closeAllMenus();
     logout();
-    window.location.href = "/login";
+    window.location.href = "/login"; 
   };
 
   getUserInitial = () => {
@@ -81,6 +85,9 @@ export default class Navbar extends Component {
 
   render() {
     const { isMobileMenuOpen, authenticated, isSubmenuOpen } = this.state;
+    
+    const { cartItems } = this.context;
+    const totalItemsInCart = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
     const getNavLinkClass = ({ isActive }) =>
       `${styles.link} ${isActive ? styles.active : ""}`;
@@ -97,11 +104,27 @@ export default class Navbar extends Component {
           <NavLink to="/" className={getNavLinkClass} onClick={this.closeMobileMenu}>
             <FiHome /> Home
           </NavLink>
+
           {authenticated ? (
             <>
               <NavLink to="/shop" className={getNavLinkClass} onClick={this.closeMobileMenu}>
-                <FiShoppingCart /> Loja
+                <FiGrid /> Loja
               </NavLink>
+
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  `${getNavLinkClass({ isActive })} ${styles.cartLinkContainer}`
+                }
+                onClick={this.closeMobileMenu}
+              >
+                <FiShoppingCart />
+                <span>Carrinho</span>
+                {totalItemsInCart > 0 && (
+                  <span className={styles.cartCount}>{totalItemsInCart}</span>
+                )}
+              </NavLink>
+
               <div className={styles.avatarContainer} ref={this.submenuRef}>
                 <div className={styles.avatar} onClick={this.toggleSubmenu}>
                   {this.getUserInitial()}
@@ -114,6 +137,13 @@ export default class Navbar extends Component {
                       onClick={this.closeAllMenus}
                     >
                       <FiGrid /> Dashboard
+                    </NavLink>
+                    <NavLink
+                      to="/orders"
+                      className={styles.submenuLink}
+                      onClick={this.closeAllMenus}
+                    >
+                      <FiArchive /> Meus Pedidos
                     </NavLink>
                     <button onClick={this.handleLogout} className={styles.submenuLogout}>
                       <FiLogOut /> Sair

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
+// 1. Importe o CartProvider
+import { CartProvider } from "./contexts/CartContext";
+
 import RouterComponent from "./router";
-
 import ToastContainer from "./components/Toast";
-
 import api from "./services/api";
-
 import { isAuthenticated } from "./services/auth";
 
 class App extends Component {
@@ -26,10 +26,11 @@ class App extends Component {
 
     render() {
         return (
-            <>
+            // 2. Envolva toda a aplicação com o CartProvider
+            <CartProvider>
                 <RouterComponent />
                 <ToastContainer />
-            </>
+            </CartProvider>
         );
     };
 };

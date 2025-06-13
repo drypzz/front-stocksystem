@@ -240,6 +240,53 @@
    line-height: 1.5;
 }
 
+/* Adicione estas classes ao final do seu Shop/style.module.css */
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cartLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #1e293b;
+  color: #f1f5f9;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.cartLink:hover {
+  border-color: #38bdf8;
+  background-color: #334155;
+  color: #38bdf8;
+}
+
+.cartCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border: 2px solid #1e293b;
+}
+
 @media (max-width: 960px) {
    .container {
       padding: 1.5rem 1rem;
@@ -258,4 +305,9 @@
    .productList {
       grid-template-columns: 1fr;
    }
+
+     .headerActions {
+    justify-content: center;
+    width: 100%;
+  }
 }
