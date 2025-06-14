@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
+import Profile from "./pages/Profile";
 import OrderDetailWrapper from "./pages/OrderDetail";
 
 import Navbar from "./components/Navbar";
@@ -30,6 +31,7 @@ const RouterComponent = () => (
             <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/orders" element={<PrivateRoute element={<OrderHistory />} />} />
             <Route path="/order/:id" element={<PrivateRoute element={<OrderDetailWrapper />} />} />
+            <Route path="/user" element={<PrivateRoute element={<Profile />} />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     </Router>

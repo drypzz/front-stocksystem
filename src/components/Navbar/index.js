@@ -132,6 +132,13 @@ export default class Navbar extends Component {
                 {isSubmenuOpen && (
                   <div className={styles.submenu}>
                     <NavLink
+                      to="/user"
+                      className={styles.submenuLink}
+                      onClick={this.closeAllMenus}
+                    >
+                      <FiUser /> Perfil
+                    </NavLink>
+                    <NavLink
                       to="/dashboard"
                       className={styles.submenuLink}
                       onClick={this.closeAllMenus}

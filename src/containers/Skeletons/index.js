@@ -117,3 +117,29 @@ export const CartSkeleton = () => {
         </>
     );
 };
+
+export const ProfileSkeleton = () => {
+    return (
+        <>
+            <aside className={styles.skeletonProfileSidebar}>
+                <div className={styles.skeletonAvatar} />
+                <div className={styles.skeletonLine} style={{ height: '28px', width: '70%', margin: '0 auto' }} />
+                <div className={styles.skeletonLine} style={{ height: '20px', width: '90%', margin: '0 auto' }} />
+                <div className={styles.skeletonLine} style={{ height: '45px', marginTop: '0.5rem' }} />
+            </aside>
+
+            <main className={styles.skeletonProfileMain}>
+                <div className={styles.skeletonSectionCard}>
+                    <div className={styles.skeletonSectionHeader}>
+                        <div className={styles.skeletonLine} style={{ height: '24px', width: '180px' }} />
+                    </div>
+                    <div className={styles.skeletonSectionContent}>
+                        <div className={styles.skeletonLine} style={{ height: '18px' }} />
+                        <div className={styles.skeletonLine} style={{ height: '18px', width: '90%' }} />
+                        <div className={styles.skeletonLine} style={{ height: '42px', width: '200px', marginTop: '1rem' }} />
+                    </div>
+                </div>
+            </main>
+        </>
+    );
+};

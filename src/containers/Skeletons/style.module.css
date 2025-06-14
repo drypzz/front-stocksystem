@@ -177,3 +177,43 @@
     flex-direction: column;
     width: 100%;
 }
+
+.skeletonProfileSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.skeletonAvatar {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #283446 25%, #334155 50%, #283446 75%);
+    background-size: 2000px 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonProfileMain {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.skeletonSectionCard {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    overflow: hidden; /* Garante que a animação não vaze */
+}
+
+.skeletonSectionHeader {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #334155;
+}
+
+.skeletonSectionContent {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}   
