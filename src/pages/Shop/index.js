@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'; 
-import { FiFilter, FiInfo, FiShoppingCart } from 'react-icons/fi';
-import ProductCardSkeleton from '../../containers/ProductCardSkeleton';
-import Dropdown from '../../components/Dropdown';
-import api from '../../services/api';
-import { CartContext } from '../../contexts/CartContext';
+import { Link } from 'react-router-dom';
+
 import { AiOutlineProduct } from "react-icons/ai";
+import { FiFilter, FiInfo, FiShoppingCart } from 'react-icons/fi';
+
+import { ProductCardSkeleton } from '../../containers/Skeletons';
+
+import Dropdown from '../../components/Dropdown';
+
+import { CartContext } from '../../contexts/CartContext';
+
+import api from '../../services/api';
+
 import styles from './style.module.css';
 
 export default class Shop extends Component {
@@ -40,8 +46,8 @@ export default class Shop extends Component {
         'all': 'Todas as Categorias',
         ...categoriesList.reduce((acc, cat) => ({ ...acc, [cat.id]: cat.name }), {})
       };
-      
-      const productsList = (productsResponse.data?.products || []).map(p => ({...p, originalQuantity: p.quantity}));
+
+      const productsList = (productsResponse.data?.products || []).map(p => ({ ...p, originalQuantity: p.quantity }));
 
       this.setState({
         allProducts: productsList,
@@ -87,7 +93,7 @@ export default class Shop extends Component {
                 ${product.quantity > 0 ? styles.buyButton : styles.outOfStockButton}
               `}
               onClick={() => addToCart(product)}
-              disabled={product.quantity === 0} 
+              disabled={product.quantity === 0}
             >
               <FiShoppingCart size={18} /> {product.quantity > 0 ? 'Adicionar ao Carrinho' : 'Sem Estoque'}
             </button>
@@ -107,7 +113,7 @@ export default class Shop extends Component {
 
   render() {
     const { loading, error, categoriesList, selectedCategory } = this.state;
-    const { cartItems } = this.context; 
+    const { cartItems } = this.context;
     const categoryOptions = [{ id: 'all', name: 'Todas as Categorias' }, ...categoriesList];
     const totalItemsInCart = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -117,19 +123,19 @@ export default class Shop extends Component {
           <header className={styles.shopHeader}>
             <h1 className={styles.title}><AiOutlineProduct /> Produtos</h1>
             <div className={styles.headerActions}>
-                <Dropdown
-                    icon={FiFilter}
-                    placeholder="Filtrar por Categoria"
-                    options={categoryOptions}
-                    value={selectedCategory}
-                    onChange={this.handleCategoryChange}
-                    disabled={loading}
-                />
-                <Link to="/cart" className={styles.cartLink}>
-                    <FiShoppingCart size={20} />
-                    <span>Carrinho</span>
-                    {totalItemsInCart > 0 && <span className={styles.cartCount}>{totalItemsInCart}</span>}
-                </Link>
+              <Dropdown
+                icon={FiFilter}
+                placeholder="Filtrar por Categoria"
+                options={categoryOptions}
+                value={selectedCategory}
+                onChange={this.handleCategoryChange}
+                disabled={loading}
+              />
+              <Link to="/cart" className={styles.cartLink}>
+                <FiShoppingCart size={20} />
+                <span>Carrinho</span>
+                {totalItemsInCart > 0 && <span className={styles.cartCount}>{totalItemsInCart}</span>}
+              </Link>
             </div>
           </header>
 
@@ -140,7 +146,7 @@ export default class Shop extends Component {
               ))}
             </div>}
             {error && <div className={styles.emptyState}><p>{error}</p></div>}
-            
+
             {!loading && !error && (
               <div
                 key={selectedCategory}

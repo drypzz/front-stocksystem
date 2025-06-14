@@ -4,12 +4,14 @@ import { FiEdit, FiTrash2, FiPlus, FiSearch, FiAlertTriangle } from "react-icons
 
 import CategoryForm from "../../containers/CategoryForm";
 import ProductForm from "../../containers/ProductForm";
-import TableSkeleton from "../../containers/TableSkeleton";
+
+import { TableSkeleton } from '../../containers/Skeletons';
 
 import Modal from "../../components/Modal";
 
-import api from "../../services/api";
 import ToastService from "../../services/toastservice.js";
+
+import api from "../../services/api";
 
 import styles from "./style.module.css";
 

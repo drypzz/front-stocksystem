@@ -1,0 +1,179 @@
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeletonLine {
+    background: linear-gradient(90deg, #283446 25%, #334155 50%, #283446 75%);
+    background-size: 2000px 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 4px;
+}
+
+.skeletonRow td {
+    padding: 1rem 1.25rem;
+}
+
+.skeletonCard {
+    background-color: #1e293b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+}
+
+.skeletonCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.skeletonCardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #334155;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.skeletonActions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid #334155;
+}
+
+.skeletonPageHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #334155;
+}
+
+.skeletonDetailCard {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.skeletonOrderSummary {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: #334155;
+}
+
+.skeletonProductList {
+    padding: 1.5rem;
+}
+
+.skeletonProductItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #334155;
+}
+
+.skeletonProductItem:last-child {
+    border-bottom: none;
+}
+
+.skeletonProductInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.skeletonOrderTotal {
+    padding: 1.5rem;
+    background-color: rgba(14, 165, 233, 0.1);
+    border-top: 1px solid #38bdf8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skeletonOrderCard {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.skeletonOrderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: #334155;
+}
+
+.skeletonOrderInfoGroup {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.skeletonCartGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 960px) {
+    .skeletonCartGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skeletonCartItem {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.skeletonCartItemDetails {
+    flex-grow: 1;
+}
+
+.skeletonCartItemActions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.skeletonCartSummary {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 2rem;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

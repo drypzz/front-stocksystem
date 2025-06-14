@@ -1,6 +1,13 @@
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .container {
@@ -44,7 +51,7 @@
   border-radius: 8px;
   overflow: hidden;
   animation: fadeInUp 0.5s ease-out backwards;
-  transition: border-color 0.3s ease; 
+  transition: border-color 0.3s ease;
 }
 
 .orderCard.active {
@@ -89,7 +96,7 @@
 }
 
 .contentOpen {
-  max-height: 600px; 
+  max-height: 600px;
 }
 
 
@@ -125,13 +132,13 @@
 
 .orderFooter {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
   background-color: rgba(14, 165, 233, 0.1);
   border-top: 1px solid #38bdf8;
   font-weight: bold;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -144,6 +151,32 @@
 .orderTotal {
   font-size: 1.25rem;
   color: #7dd3fc;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.detailsButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #38bdf8;
+  background-color: transparent;
+  color: #7dd3fc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.detailsButton:hover {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
 }
 
 .cancelButton {
@@ -204,8 +237,13 @@
 }
 
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .errorState {
@@ -254,4 +292,38 @@
 
 .retryButton:hover {
   background-color: #dc2626;
+}
+
+.orderErrorState {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  background-color: rgba(245, 158, 11, 0.05);
+  color: #f59e0b;
+}
+
+.orderErrorIcon {
+  font-size: 2.5rem;
+}
+
+.orderErrorState h4 {
+  margin: 0;
+  color: #fbbf24;
+  font-size: 1.1rem;
+}
+
+.orderErrorState p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #eab308;
+  max-width: 400px;
+}
+
+.unavailableTotal {
+  font-size: 1.1rem;
+  color: #f59e0b;
+  opacity: 0.8;
 }
