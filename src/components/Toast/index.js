@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { FiCheckCircle, FiXCircle, FiInfo, FiAlertTriangle, FiX } from 'react-icons/fi';
+import { FiCheckCircle, FiXCircle, FiInfo, FiAlertTriangle, FiX } from "react-icons/fi";
 
-import ToastService from '../../services/toastservice';
+import ToastService from "../../services/toastservice";
 
-import styles from './style.module.css';
+import styles from "./style.module.css";
 
 class Toast extends Component {
     state = { exiting: false };
 
     componentDidMount() {
         const { type, duration } = this.props;
-        if (type === 'confirm') {
+        if (type === "confirm") {
             const cancelDuration = duration || 7000;
             this.timeout = setTimeout(this.handleCancel, cancelDuration);
         } else {
@@ -39,16 +39,16 @@ class Toast extends Component {
     };
 
     render() {
-        const { type = 'info', message } = this.props;
+        const { type = "info", message } = this.props;
         const { exiting } = this.state;
         const icons = { success: <FiCheckCircle />, error: <FiXCircle />, info: <FiInfo />, confirm: <FiAlertTriangle /> };
         
         return (
-            <div className={`${styles.toast} ${styles[type]} ${exiting ? styles.exiting : ''}`}>
+            <div className={`${styles.toast} ${styles[type]} ${exiting ? styles.exiting : ""}`}>
                 <div className={styles.toastIcon}>{icons[type]}</div>
                 <div className={styles.toastContent}>
                     <p>{message}</p>
-                    {type === 'confirm' && (
+                    {type === "confirm" && (
                         <>
                             <p className={styles.confirmText}>Esta ação requer confirmação.</p>
                             <div className={styles.confirmActions}>
@@ -58,7 +58,7 @@ class Toast extends Component {
                         </>
                     )}
                 </div>
-                {type !== 'confirm' && <button className={styles.closeButton} onClick={this.startExiting}><FiX /></button>}
+                {type !== "confirm" && <button className={styles.closeButton} onClick={this.startExiting}><FiX /></button>}
             </div>
         );
     };
@@ -72,7 +72,7 @@ export default class ToastContainer extends Component {
     componentWillUnmount() { ToastService.unregister(); }
 
     handleToastRequest = (action, options) => {
-        const newToast = { ...options, id: Date.now() + Math.random(), type: action === 'confirm' ? 'confirm' : options.type || 'info', };
+        const newToast = { ...options, id: Date.now() + Math.random(), type: action === "confirm" ? "confirm" : options.type || "info", };
         if (newToast.key && this.state.toasts.some(toast => toast.key === newToast.key)) { return; }
         this.addToast(newToast);
     };

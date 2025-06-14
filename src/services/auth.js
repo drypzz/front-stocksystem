@@ -1,18 +1,19 @@
 const TOKEN_KEY = "authToken";
+const USER_KEY = "user";
 
 export const login = (token, props) => {
   localStorage.setItem(TOKEN_KEY, token);
-  if (props) localStorage.setItem("user", JSON.stringify(props));
+  if (props) localStorage.setItem(USER_KEY, JSON.stringify(props));
 };
 
 export const getUser = () => {
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem(USER_KEY);
   return user ? JSON.parse(user) : null;
 };
 
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem("user");
+  localStorage.removeItem(USER_KEY);
 };
 
 export const getToken = () => {

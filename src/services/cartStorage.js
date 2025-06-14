@@ -1,12 +1,24 @@
-const CART_KEY = 'cartItems';
+import { getUser } from "./auth";
 
-/**
- * Busca os itens do carrinho no localStorage.
- * @returns {Array} A lista de itens do carrinho ou um array vazio.
- */
+const BASE_CART_KEY = "cartItems";
+
+const generateUserCartKey = () => {
+  const user = getUser();
+  if (!user || !user.id) {
+    return null;
+  }
+  return `${BASE_CART_KEY}_user_${user.id}`;
+};
+
 export const getCart = () => {
+  const userCartKey = generateUserCartKey();
+
+  if (!userCartKey) {
+    return [];
+  }
+
   try {
-    const localData = localStorage.getItem(CART_KEY);
+    const localData = localStorage.getItem(userCartKey);
     return localData ? JSON.parse(localData) : [];
   } catch (error) {
     console.error("Erro ao ler o carrinho do localStorage:", error);
@@ -14,15 +26,25 @@ export const getCart = () => {
   }
 };
 
-/**
- * Salva a lista de itens do carrinho no localStorage.
- * @param {Array} cartItems A lista de itens a ser salva.
- */
 export const saveCart = (cartItems) => {
+  const userCartKey = generateUserCartKey();
+
+  if (!userCartKey) {
+    console.warn("Nenhum usuário logado. O carrinho não será salvo.");
+    return;
+  }
+
   try {
     const dataToStore = JSON.stringify(cartItems);
-    localStorage.setItem(CART_KEY, dataToStore);
+    localStorage.setItem(userCartKey, dataToStore);
   } catch (error) {
     console.error("Erro ao salvar o carrinho no localStorage:", error);
+  }
+};
+
+export const clearUserCartFromStorage = () => {
+  const userCartKey = generateUserCartKey();
+  if (userCartKey) {
+    localStorage.removeItem(userCartKey);
   }
 };
