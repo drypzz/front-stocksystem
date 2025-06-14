@@ -82,7 +82,10 @@ export default class Shop extends Component {
           </div>
           <div className={styles.productActions}>
             <button
-              className={`${styles.actionButton} ${styles.buyButton}`}
+              className={`
+                ${styles.actionButton}
+                ${product.quantity > 0 ? styles.buyButton : styles.outOfStockButton}
+              `}
               onClick={() => addToCart(product)}
               disabled={product.quantity === 0} 
             >

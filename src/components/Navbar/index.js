@@ -143,7 +143,7 @@ export default class Navbar extends Component {
                       className={styles.submenuLink}
                       onClick={this.closeAllMenus}
                     >
-                      <FiArchive /> Meus Pedidos
+                      <FiArchive /> Histórico
                     </NavLink>
                     <button onClick={this.handleLogout} className={styles.submenuLogout}>
                       <FiLogOut /> Sair

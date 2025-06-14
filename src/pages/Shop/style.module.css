@@ -150,14 +150,26 @@
 }
 
 .buyButton {
-   background-color: #10b981;
-   color: white;
+  background-color: #10b981; 
+  color: white;
 }
 
-.buyButton:hover {
-   background-color: #059669;
-   transform: translateY(-2px);
-   box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+.buyButton:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+.outOfStockButton {
+  background-color: #ef4444; 
+  color: white;
+  cursor: not-allowed;
+}
+
+.outOfStockButton:hover {
+  transform: none;
+  box-shadow: none;
+  background-color: #dc2626; 
 }
 
 .errorState {
