@@ -4,7 +4,7 @@
 
 [![Versão](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen.svg)]()
-[![Tecnologia](https://img.shields.io/badge/react-18.2.0-61DAFB?logo=react)]()
+[![Tecnologia](https://img.shields.io/badge/react-19.1.0-61DAFB?logo=react)]()
 
 <p align="center">
   <img src="https://github.com/drypzz/front-stocksystem/blob/master/layout/screenshot.png" alt="Layout do StockSystem" width="700"/>
