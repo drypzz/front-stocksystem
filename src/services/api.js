@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { logout } from "./auth";
 
-const API_BASE_URL = "http://localhost:3001/api/v1";
+const API_BASE_URL = "https://api-stocksystem.onrender.com/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE_URL,

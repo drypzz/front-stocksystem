@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { FiFileText, FiCalendar, FiHash, FiAlertTriangle, FiArrowLeft } from "react-icons/fi";
 
@@ -27,11 +27,11 @@ class OrderDetail extends Component {
     }
 
     loadOrderDetail = async () => {
-        const { orderId } = this.props;
+        const { publicId } = this.props;
         this.setState({ loading: true, error: null });
 
         try {
-            const response = await api.get(`/order/${orderId}`);
+            const response = await api.get(`/order/${publicId}`);
             this.setState({ order: response.data, loading: false });
         } catch (err) {
             const status = err.response?.status;
@@ -41,7 +41,7 @@ class OrderDetail extends Component {
                     type: "error",
                     message: status === 404 ? "Pedido não encontrado." : "Você não tem permissão para ver este pedido."
                 });
-                window.location.href = "/orders";
+                this.props.navigate('/orders');
             } else {
                 this.setState({ error: message, loading: false });
             }
@@ -122,17 +122,11 @@ class OrderDetail extends Component {
     }
 }
 
-const OrderDetailWrapper = () => {
-    const { id } = useParams();
-
-    useEffect(() => {
-        const isNumericId = /^\d+$/.test(id);
-        if (!isNumericId) {
-            window.location.href = "/orders";
-        }
-    }, [id]);
-
-    return <OrderDetail orderId={id} />;
+const OrderDetailWrapper = (props) => {
+    const { publicId } = useParams();
+    const navigate = useNavigate();
+    
+    return <OrderDetail {...props} publicId={publicId} navigate={navigate} />;
 };
 
 export default OrderDetailWrapper;

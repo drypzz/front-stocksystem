@@ -39,13 +39,13 @@ const Cart = () => {
 
     try {
       const response = await api.post("/order", orderPayload);
-      const orderId = response.data.order.id;
+      const publicId = response.data.order.publicId;
 
       ToastService.show({ type: "success", message: "Pedido criado! Redirecionando para pagamento..." });
 
       clearCart();
 
-      navigate(`/payment/${orderId}`);
+      navigate(`/payment/${publicId}`);
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Falha ao processar o pedido. Tente novamente.";

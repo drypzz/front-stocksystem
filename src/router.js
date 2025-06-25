@@ -30,9 +30,9 @@ const RouterComponent = () => (
             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path="/shop" element={<PrivateRoute element={<Shop />} />} />
             <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
-            <Route path="/payment/:orderId" element={<PrivateRoute element={<Payment />} />} />
+            <Route path="/payment/:publicId" element={<PrivateRoute element={<Payment />} />} />
             <Route path="/orders" element={<PrivateRoute element={<OrderHistory />} />} />
-            <Route path="/order/:id" element={<PrivateRoute element={<OrderDetailWrapper />} />} />
+            <Route path="/order/:publicId" element={<PrivateRoute element={<OrderDetailWrapper />} />} />
             <Route path="/user" element={<PrivateRoute element={<Profile />} />} />
             <Route path="*" element={<NotFound />} />
         </Routes>

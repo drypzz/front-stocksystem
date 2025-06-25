@@ -32,11 +32,11 @@ class Payment extends Component {
   }
 
   checkOrderStatusAndProceed = async () => {
-    const { orderId, navigate } = this.props;
+    const { publicId, navigate } = this.props;
     this.setState({ status: 'checking' });
 
     try {
-      const response = await api.get(`/order/${orderId}`);
+      const response = await api.get(`/order/${publicId}`);
       const currentStatus = response.data.paymentStatus;
 
       switch (currentStatus) {
@@ -64,9 +64,9 @@ class Payment extends Component {
   }
 
   createPayment = async () => {
-    const { orderId } = this.props;
+    const { publicId } = this.props;
     try {
-      const response = await api.post(`/order/${orderId}/pay`);
+      const response = await api.post(`/order/${publicId}/pay`);
       this.setState({
         paymentInfo: response.data,
         status: 'awaiting',
@@ -82,8 +82,8 @@ class Payment extends Component {
   startStatusPolling = () => {
     this.intervalID = setInterval(async () => {
       try {
-        const { orderId } = this.props;
-        const response = await api.get(`/order/${orderId}?_t=${new Date().getTime()}`);
+        const { publicId } = this.props;
+        const response = await api.get(`/order/${publicId}?_t=${new Date().getTime()}`);
         const currentStatus = response.data.paymentStatus;
 
         if (currentStatus === 'approved') {
@@ -172,9 +172,9 @@ class Payment extends Component {
 }
 
 const PaymentWrapper = (props) => {
-  const { orderId } = useParams();
+  const { publicId } = useParams();
   const navigate = useNavigate();
-  return <Payment {...props} orderId={orderId} navigate={navigate} />;
+  return <Payment {...props} publicId={publicId} navigate={navigate} />;
 };
 
 export default PaymentWrapper;
