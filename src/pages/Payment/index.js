@@ -9,6 +9,7 @@ import api from '../../services/api';
 import ToastService from '../../services/toastservice';
 
 import styles from './style.module.css';
+import Countdown from '../../components/Countdown';
 
 class Payment extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class Payment extends Component {
 
       switch (currentStatus) {
         case 'pending':
-          this.createPayment();
+          this.fetchPaymentDetails();
           break;
         case 'approved':
           navigate('/orders');
@@ -63,7 +64,7 @@ class Payment extends Component {
     }
   }
 
-  createPayment = async () => {
+  fetchPaymentDetails = async () => {
     const { publicId } = this.props;
     try {
       const response = await api.post(`/order/${publicId}/pay`);
@@ -107,6 +108,11 @@ class Payment extends Component {
     });
   };
 
+  handleExpire = () => {
+    this.setState({ status: 'failed', error: 'O tempo para pagamento expirou.' });
+    if (this.intervalID) clearInterval(this.intervalID);
+  }
+
   renderContent = () => {
     const { status, paymentInfo, error } = this.state;
 
@@ -118,37 +124,44 @@ class Payment extends Component {
       case 'awaiting':
         return (
           <>
-            <FiClock className={styles.statusIcon} style={{ color: '#f59e0b' }} />
-            <h2 className={styles.statusTitle}>Aguardando Pagamento</h2>
-            <p className={styles.statusSubtitle}>Escaneie o QR Code abaixo com o app do seu banco.</p>
-            <img draggable="false" src={`data:image/jpeg;base64,${paymentInfo.qrCodeBase64}`} alt="PIX QR Code" className={styles.qrCode} />
-            <div className={styles.pixCopyContainer}>
-              <input type="text" readOnly value={paymentInfo.qrCode} className={styles.pixCopyPaste} />
-              <button onClick={() => this.copyToClipboard(paymentInfo.qrCode)} className={styles.copyButton}>
-                <FiCopy />
-              </button>
+            <div className={styles.statusContentWrapper}>
+              <FiClock className={styles.statusIcon} style={{ color: '#f59e0b' }} />
+              <h2 className={styles.statusTitle}>Aguardando Pagamento</h2>
+              {paymentInfo.expiresAt && <Countdown expirationTime={paymentInfo.expiresAt} onExpire={this.handleExpire} />}
+              <p className={styles.statusSubtitle}>Escaneie o QR Code abaixo com o app do seu banco.</p>
+              <img draggable="false" src={`data:image/jpeg;base64,${paymentInfo.qrCodeBase64}`} alt="PIX QR Code" className={styles.qrCode} />
+              <div className={styles.pixCopyContainer}>
+                <input type="text" readOnly value={paymentInfo.qrCode} className={styles.pixCopyPaste} />
+                <button onClick={() => this.copyToClipboard(paymentInfo.qrCode)} className={styles.copyButton}>
+                  <FiCopy />
+                </button>
+              </div>
+              <small className={styles.copyHelpText}>Clique no ícone para copiar o código PIX.</small>
             </div>
-            <small className={styles.copyHelpText}>Clique no ícone para copiar o código PIX.</small>
           </>
         );
 
       case 'approved':
         return (
           <>
-            <FiCheckCircle className={styles.statusIcon} style={{ color: '#10b981' }} />
-            <h2 className={styles.statusTitle}>Pagamento Aprovado!</h2>
-            <p className={styles.statusSubtitle}>Seu pedido foi confirmado e logo será preparado para envio.</p>
-            <Link to="/orders" className={styles.actionButton}>Ver Meus Pedidos</Link>
+            <div className={styles.statusContentWrapper}>
+              <FiCheckCircle className={styles.statusIcon} style={{ color: '#10b981' }} />
+              <h2 className={styles.statusTitle}>Pagamento Aprovado!</h2>
+              <p className={styles.statusSubtitle}>Seu pedido foi confirmado e logo será preparado para envio.</p>
+              <Link to="/orders" className={styles.actionButton}>Ver Meus Pedidos</Link>
+            </div>
           </>
         );
 
       case 'failed':
         return (
           <>
-            <FiXCircle className={styles.statusIcon} style={{ color: '#ef4444' }} />
-            <h2 className={styles.statusTitle}>Falha no Pedido</h2>
-            <p className={styles.statusSubtitle}>{error}</p>
-            <Link to="/orders" className={styles.actionButton}>Voltar ao Histórico</Link>
+            <div className={styles.statusContentWrapper}>
+              <FiXCircle className={styles.statusIcon} style={{ color: '#ef4444' }} />
+              <h2 className={styles.statusTitle}>Falha no Pedido</h2>
+              <p className={styles.statusSubtitle}>{error}</p>
+              <Link to="/orders" className={styles.actionButton}>Voltar ao Histórico</Link>
+            </div>
           </>
         );
 
