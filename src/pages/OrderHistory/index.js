@@ -1,16 +1,16 @@
 import React, { Component } from "react";
+
 import { Link } from "react-router-dom";
 
-import { FiArchive, FiInfo, FiCalendar, FiHash, FiChevronDown, FiChevronUp, FiXCircle, FiAlertTriangle, FiFileText } from "react-icons/fi";
+import { FiArchive, FiCalendar, FiHash, FiChevronDown, FiChevronUp, FiXCircle, FiCreditCard, FiCheckCircle, FiAlertTriangle, FiInfo } from "react-icons/fi";
 
-import { OrderCardSkeleton } from "../../containers/Skeletons"; 
+import { OrderCardSkeleton } from "../../containers/Skeletons";
 
 import ToastService from "../../services/toastservice";
 
 import api from "../../services/api";
 
 import styles from "./style.module.css";
-
 
 export default class OrderHistory extends Component {
   constructor(props) {
@@ -50,6 +50,17 @@ export default class OrderHistory extends Component {
     }, 0);
   };
 
+  renderStatusBadge = (status) => {
+    const statusMap = {
+      pending: { text: "Aguardando", className: styles.statusPending },
+      approved: { text: "Aprovado", className: styles.statusApproved },
+      cancelled: { text: "Cancelado", className: styles.statusCancelled },
+      expired: { text: "Expirado", className: styles.statusCancelled },
+    };
+    const { text, className } = statusMap[status] || { text: status, className: "" };
+    return <span className={`${styles.statusBadge} ${className}`}>{text}</span>;
+  }
+
   handleToggleOrder = (orderId) => { this.setState(prevState => ({ openOrderId: prevState.openOrderId === orderId ? null : orderId, })); };
 
   handleCancelOrder = (order, event) => {
@@ -61,6 +72,11 @@ export default class OrderHistory extends Component {
     });
   };
 
+  handleGoToPayment = (orderId, event) => {
+    event.stopPropagation();
+    window.location.href = `/payment/${orderId}`;
+  }
+
   performCancelOrder = async (orderId) => {
     try {
       await api.delete(`/order/${orderId}`);
@@ -71,6 +87,27 @@ export default class OrderHistory extends Component {
       ToastService.show({ key: `cancel-order-error-${orderId}`, type: "error", message });
     }
   };
+
+  renderActionButtons = (order) => {
+    if (order.paymentStatus === 'pending') {
+      return (
+        <>
+          <button className={styles.payButton} onClick={(e) => this.handleGoToPayment(order.id, e)}>
+            <FiCreditCard /> Pagar Agora
+          </button>
+          <button className={styles.cancelButton} onClick={(e) => this.handleCancelOrder(order, e)}>
+            <FiXCircle /> Cancelar
+          </button>
+        </>
+      );
+    }
+
+    return (
+      <div className={styles.approvedIndicator}>
+        <FiCheckCircle /> Pedido Concluído
+      </div>
+    );
+  }
 
   render() {
     const { orders, loading, error, openOrderId } = this.state;
@@ -96,77 +133,59 @@ export default class OrderHistory extends Component {
             </div>
           )}
 
-          {!loading && !error && (
-            <>
-              {orders.length > 0 ? (
-                <section className={styles.orderList}>
-                  {orders.map(order => {
-                    const isOpen = openOrderId === order.id;
-                    const isValid = this.isOrderValid(order);
+          {orders.length <= 0 && (
+            <div className={styles.emptyState}>
+              <FiInfo size={48} className={styles.emptyIcon} />
+              <h3>Você ainda não fez nenhum pedido.</h3>
+              <p>Explore nossa <Link to="/shop">loja</Link> e encontre algo que goste!</p>
+            </div>
+          )}
 
-                    return (
-                      <div key={order.id} className={`${styles.orderCard} ${isOpen ? styles.active : ""}`}>
-                        <header className={styles.orderHeader} onClick={() => this.handleToggleOrder(order.id)}>
-                          <div className={styles.orderInfo}><FiHash /> Pedido #{order.id}</div>
-                          <div className={styles.orderInfo}><FiCalendar />{new Date(order.createdAt).toLocaleString("pt-BR")}</div>
-                          <span className={styles.toggleIcon}>{isOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
-                        </header>
-                        <div className={`${styles.collapsibleContent} ${isOpen ? styles.contentOpen : ""}`}>
-                          {!isValid ? (
-                            <div className={styles.orderErrorState}>
-                              <FiAlertTriangle className={styles.orderErrorIcon} />
-                              <h4>Problema ao Exibir Pedido</h4>
-                              <p>Este pedido contém produtos que não estão mais disponíveis ou os dados estão inconsistentes.</p>
-                            </div>
-                          ) : (
-                            <div className={styles.productList}>
-                              {order.products.map(product => (
-                                <div key={`${order.id}-${product.id}`} className={styles.productItem}>
-                                  <span className={styles.productName}>{product.order_products.quantity}x {product.name}</span>
-                                  <span className={styles.productPrice}>
-                                    {Number(product.price * product.order_products.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          <footer className={styles.orderFooter}>
-                            <div className={styles.totalContainer}>
-                              {isValid ? (
-                                <>
-                                  <span>Total do Pedido</span>
-                                  <span className={styles.orderTotal}>
-                                    {this.calculateOrderTotal(order.products).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className={styles.unavailableTotal}>Total Indisponível</span>
-                              )}
-                            </div>
-                            <div className={styles.buttonGroup}>
-                              {isValid && (
-                                <Link to={`/order/${order.id}`} className={styles.detailsButton}>
-                                  <FiFileText /> Detalhes
-                                </Link>
-                              )}
-                              <button className={styles.cancelButton} onClick={(e) => this.handleCancelOrder(order, e)}>
-                                <FiXCircle /> {isValid ? "Cancelar" : "Deletar"}
-                              </button>
-                            </div>
-                          </footer>
-                        </div>
+          {!loading && !error && orders.length > 0 && (
+            <section className={styles.orderList}>
+              {orders.map(order => {
+                const isOpen = openOrderId === order.id;
+                return (
+                  <div key={order.id} className={`${styles.orderCard} ${isOpen ? styles.active : ""}`}>
+                    <header className={styles.orderHeader} onClick={() => this.handleToggleOrder(order.id)}>
+                      <div className={styles.orderInfo}>
+                        <FiHash /> Pedido #{order.id}
                       </div>
-                    )
-                  })}
-                </section>
-              ) : (
-                <div className={styles.emptyState}>
-                  <FiInfo size={48} className={styles.emptyIcon} />
-                  <h3>Você ainda não fez nenhum pedido.</h3>
-                  <p>Explore nossa <Link to="/shop">loja</Link> e encontre algo que goste!</p>
-                </div>
-              )}
-            </>
+                      <div className={styles.orderInfo}>
+                        <FiCalendar />{new Date(order.createdAt).toLocaleString("pt-BR")}
+                      </div>
+                      <div className={styles.orderInfo}>
+                        {this.renderStatusBadge(order.paymentStatus)}
+                      </div>
+                      <span className={styles.toggleIcon}>{isOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
+                    </header>
+                    <div className={`${styles.collapsibleContent} ${isOpen ? styles.contentOpen : ""}`}>
+                      <div className={styles.productList}>
+                        {order.products.map(product => (
+                          <div key={`${order.id}-${product.id}`} className={styles.productItem}>
+                            <span className={styles.productName}>{product.order_products.quantity}x {product.name}</span>
+                            <span className={styles.productPrice}>
+                              {Number(product.price * product.order_products.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <footer className={styles.orderFooter}>
+                        <div className={styles.totalContainer}>
+                          <span>Total do Pedido</span>
+                          <span className={styles.orderTotal}>
+                            {this.calculateOrderTotal(order.products).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                          </span>
+                        </div>
+                        <div className={styles.buttonGroup}>
+                          {this.renderActionButtons(order)}
+                        </div>
+                      </footer>
+                    </div>
+                  </div>
+                )
+              })}
+            </section>
           )}
         </div>
       </div>

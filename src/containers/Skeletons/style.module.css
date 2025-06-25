@@ -221,3 +221,34 @@
     animation: shimmer 1.5s infinite linear;
     border: 1px solid #334155;
 }
+
+
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.skeletonQr {
+  width: 250px;
+  height: 250px;
+  background-color: #334155;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.skeletonText {
+  width: 80%;
+  height: 2.25rem;
+  background-color: #334155;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.skeletonTextSmall {
+  width: 60%;
+  height: 1rem;
+  background-color: #334155;
+  border-radius: 4px;
+}

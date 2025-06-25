@@ -1,0 +1,154 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem 1.5rem;
+  /* Cor de fundo principal do tema */
+}
+
+.paymentBox {
+  width: 100%;
+  max-width: 480px;
+  background-color: #1e293b;
+  /* Fundo do card */
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  color: #cbd5e1;
+  /* Cor de texto padrão */
+  animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.backLink {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  color: #94a3b8;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #38bdf8;
+}
+
+.statusIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.statusTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  color: #f1f5f9;
+  /* Texto principal mais claro */
+}
+
+.statusSubtitle {
+  margin: 0;
+  max-width: 350px;
+  line-height: 1.6;
+}
+
+.qrCode {
+  margin: 1.5rem 0;
+  max-width: 300px;
+  background-color: white;
+  /* QR Code precisa de fundo branco para leitura */
+  border: 1px solid white;
+  /* Borda branca para integrar */
+  padding: 0.5rem;
+  user-select: none;
+}
+
+.pixCopyContainer {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pixCopyPaste {
+  flex-grow: 1;
+  padding: 0.75rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #94a3b8;
+  border-radius: 6px 0 0 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copyButton {
+  flex-shrink: 0;
+  background: #334155;
+  color: #f1f5f9;
+  border: 1px solid #334155;
+  border-left: none;
+  padding: 0 1rem;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyButton:hover {
+  background-color: #38bdf8;
+}
+
+.copyHelpText {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.actionButton {
+  padding: 0.85rem 1.5rem;
+  background-color: #38bdf8;
+  /* Cor de ação principal */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+.actionButton:hover {
+  background-color: #0ea5e9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);
+}

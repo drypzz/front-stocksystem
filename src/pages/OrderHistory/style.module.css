@@ -1,3 +1,4 @@
+/* Animação e Estilos de Base */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -20,13 +21,12 @@
 .content {
   width: 100%;
   max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  animation: fadeInUp 0.5s ease-out backwards;
 }
 
 .pageHeader {
   padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
   border-bottom: 1px solid #334155;
 }
 
@@ -39,19 +39,18 @@
   color: #f1f5f9;
 }
 
+/* Estilos da Lista de Pedidos */
 .orderList {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .orderCard {
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
-  overflow: hidden;
-  animation: fadeInUp 0.5s ease-out backwards;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .orderCard.active {
@@ -59,153 +58,162 @@
 }
 
 .orderHeader {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr auto;
+  align-items: center;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  background-color: #334155;
-  color: #cbd5e1;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.orderHeader:hover {
-  background-color: #475569;
+  color: #94a3b8;
 }
 
 .orderInfo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 500;
 }
 
 .toggleIcon {
-  margin-left: auto;
-  padding-left: 1rem;
-  font-size: 1.2rem;
-  color: #94a3b8;
+  transition: transform 0.3s ease;
 }
 
+.active .toggleIcon {
+  transform: rotate(180deg);
+}
+
+/* Estilos do Conteúdo "Sanfona" */
 .collapsibleContent {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease-in-out;
+  transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
 }
 
 .contentOpen {
-  max-height: 600px;
+  max-height: 500px;
 }
-
 
 .productList {
   padding: 1.5rem;
+  border-top: 1px solid #334155;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .productItem {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #334155;
-}
-
-.productItem:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.productName {
-  color: #f1f5f9;
+  color: #cbd5e1;
 }
 
 .productPrice {
-  color: #94a3b8;
-  white-space: nowrap;
+  font-weight: 500;
 }
 
+/* Estilos do Rodapé do Card */
 .orderFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background-color: rgba(14, 165, 233, 0.1);
-  border-top: 1px solid #38bdf8;
-  font-weight: bold;
-  flex-wrap: wrap;
-  gap: 1rem;
+  border-top: 1px solid #334155;
+  background-color: #1a2436;
+  border-radius: 0 0 7px 7px;
 }
 
 .totalContainer {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
+  color: #cbd5e1;
 }
 
 .orderTotal {
-  font-size: 1.25rem;
-  color: #7dd3fc;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #86efac;
+  margin-left: 0.5rem;
 }
 
 .buttonGroup {
   display: flex;
-  gap: 1rem;
-  align-items: center;
+  gap: 0.75rem;
 }
 
-.detailsButton {
-  display: inline-flex;
+.approvedIndicator {
+  color: #86efac;
+  font-weight: bold;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #38bdf8;
-  background-color: transparent;
-  color: #7dd3fc;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
 }
 
-.detailsButton:hover {
-  background-color: rgba(56, 189, 248, 0.15);
+/* Estilos dos Botões de Ação */
+.payButton,
+.cancelButton {
+  background: none;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.payButton {
+  border-color: #38bdf8;
   color: #38bdf8;
 }
 
+.payButton:hover {
+  background-color: #38bdf8;
+  color: #fff;
+}
+
 .cancelButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ef4444;
-  background-color: transparent;
-  color: #f87171;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-color: #f43f5e;
+  color: #f43f5e;
 }
 
 .cancelButton:hover {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  background-color: #f43f5e;
+  color: #fff;
 }
 
-.emptyState {
+/* Estilos dos Badges de Status */
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.statusPending {
+  background-color: #f59e0b20;
+  color: #f59e0b;
+}
+
+.statusApproved {
+  background-color: #10b98120;
+  color: #10b981;
+}
+
+.statusCancelled {
+  background-color: #64748b20;
+  color: #64748b;
+}
+
+/* Estados de Vazio e Erro */
+.emptyState,
+.errorState {
   text-align: center;
   padding: 4rem 2rem;
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
   color: #94a3b8;
-  animation: fadeInUp 0.5s ease-out backwards;
 }
 
 .emptyIcon {
@@ -213,117 +221,13 @@
   margin-bottom: 1.5rem;
 }
 
-.emptyState h3 {
+h3 {
   color: #f1f5f9;
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
 }
 
-.emptyState a {
+a {
   color: #38bdf8;
   text-decoration: none;
-  font-weight: 600;
-}
-
-.emptyState a:hover {
-  text-decoration: underline;
-}
-
-.skeleton {
-  height: 200px;
-  background: linear-gradient(90deg, #1e293b, #334155, #1e293b);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite linear;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-.errorState {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  color: #fca5a5;
-  width: 100%;
-  border-radius: 8px;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  animation: fadeInUp 0.5s ease-out backwards;
-}
-
-.errorState .errorIcon {
-  color: #ef4444;
-}
-
-.errorState h3 {
-  color: #f87171;
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.errorState p {
-  max-width: 500px;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.retryButton {
-  margin-top: 0.5rem;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s;
-}
-
-.retryButton:hover {
-  background-color: #dc2626;
-}
-
-.orderErrorState {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1rem;
-  background-color: rgba(245, 158, 11, 0.05);
-  color: #f59e0b;
-}
-
-.orderErrorIcon {
-  font-size: 2.5rem;
-}
-
-.orderErrorState h4 {
-  margin: 0;
-  color: #fbbf24;
-  font-size: 1.1rem;
-}
-
-.orderErrorState p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #eab308;
-  max-width: 400px;
-}
-
-.unavailableTotal {
-  font-size: 1.1rem;
-  color: #f59e0b;
-  opacity: 0.8;
 }

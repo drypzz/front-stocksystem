@@ -50,7 +50,7 @@ export const OrderDetailSkeleton = () => {
                 </section>
                 <section className={styles.skeletonProductList}>
                     <div className={styles.skeletonLine} style={{ width: '100px', height: '22px', marginBottom: '1.5rem' }} />
-                    
+
                     {[...Array(3)].map((_, index) => (
                         <div key={index} className={styles.skeletonProductItem}>
                             <div className={styles.skeletonProductInfo}>
@@ -138,3 +138,11 @@ export const ProfileSkeleton = () => {
         </>
     );
 };
+
+export const PaymentSkeleton = () => (
+    <div className={styles.skeletonContainer}>
+        <div className={styles.skeletonQr}></div>
+        <div className={styles.skeletonText}></div>
+        <div className={styles.skeletonTextSmall}></div>
+    </div>
+);
