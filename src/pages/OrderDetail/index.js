@@ -1,9 +1,9 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
 import { FiFileText, FiCalendar, FiHash, FiAlertTriangle, FiArrowLeft } from "react-icons/fi";
 
-import { OrderDetailSkeleton } from '../../containers/Skeletons';
+import { OrderDetailSkeleton } from "../../containers/Skeletons";
 
 import ToastService from "../../services/toastservice";
 
@@ -41,7 +41,7 @@ class OrderDetail extends Component {
                     type: "error",
                     message: status === 404 ? "Pedido não encontrado." : "Você não tem permissão para ver este pedido."
                 });
-                this.props.navigate('/orders');
+                this.props.navigate("/orders");
             } else {
                 this.setState({ error: message, loading: false });
             }

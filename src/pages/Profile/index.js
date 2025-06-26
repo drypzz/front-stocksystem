@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 
-import { FiTrash2, FiEdit, FiAlertTriangle, FiUser, FiShield, FiLogOut } from "react-icons/fi";
+import { FiTrash2, FiEdit, FiAlertTriangle, FiUser, FiShield, FiLogOut, FiLoader } from "react-icons/fi";
 
 import Modal from "../../components/Modal";
 
 import UserForm from "../../containers/UserForm";
 import { ProfileSkeleton } from "../../containers/Skeletons";
 
-import { getUser, logout, login } from "../../services/auth";
-
 import ToastService from "../../services/toastservice";
 
 import api from "../../services/api";
+import { getUser, logout, login } from "../../services/auth";
 
 import styles from "./style.module.css";
 
@@ -23,6 +22,7 @@ export default class Profile extends Component {
             loading: true,
             error: null,
             isUserModalOpen: false,
+            isDeleting: false,
         };
     }
 
@@ -50,17 +50,12 @@ export default class Profile extends Component {
 
     handleSuccessfulUpdate = async () => {
         this.handleCloseUserModal();
-
         this.setState({ loading: true });
-
         try {
             const token = localStorage.getItem("authToken");
-
             const response = await api.get(`/user/${this.state.user.id}`);
             const updatedUser = response.data.user || response.data;
-
             login(token, updatedUser);
-
             this.setState({ user: updatedUser, loading: false });
         } catch (error) {
             ToastService.show({ type: "error", message: "Não foi possível sincronizar os dados." });
@@ -79,6 +74,8 @@ export default class Profile extends Component {
     };
 
     performDeleteAccount = async (userId) => {
+        this.setState({ isDeleting: true });
+
         try {
             await api.delete(`/user/${userId}`);
             ToastService.show({ key: "delete-user-success", type: "success", message: "Sua conta foi excluída com sucesso." });
@@ -90,6 +87,7 @@ export default class Profile extends Component {
 
         } catch (err) {
             ToastService.show({ key: "delete-user-error", type: "error", message: err.response?.data?.message || "Erro ao excluir a conta." });
+            this.setState({ isDeleting: false });
         }
     };
 
@@ -99,8 +97,18 @@ export default class Profile extends Component {
     }
 
     render() {
-        const { user, loading, error, isUserModalOpen } = this.state;
+        const { user, loading, error, isUserModalOpen, isDeleting } = this.state;
         const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "?");
+
+        if (isDeleting) {
+            return (
+                <div className={styles.deletingOverlay}>
+                    <FiLoader className={styles.spinner} />
+                    <h2 className={styles.deletingTitle}>Excluindo sua conta...</h2>
+                    <p className={styles.deletingSubtitle}>Aguarde um momento. Sentiremos sua falta!</p>
+                </div>
+            )
+        }
 
         return (
             <>

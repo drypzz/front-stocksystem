@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import {
-  FiClock,
-  FiCheckCircle,
-  FiXCircle,
-  FiArrowLeft,
-  FiCopy,
-} from "react-icons/fi";
+
+import { FiClock, FiCheckCircle, FiXCircle, FiArrowLeft, FiCopy } from "react-icons/fi";
+
 import { PaymentSkeleton } from "../../containers/Skeletons";
-import api from "../../services/api";
+
 import ToastService from "../../services/toastservice";
-import styles from "./style.module.css";
+
 import Countdown from "../../components/Countdown";
+
+import api from "../../services/api";
+
+import styles from "./style.module.css";
 
 class Payment extends Component {
   constructor(props) {
@@ -158,7 +158,7 @@ class Payment extends Component {
         content = (
           <>
             <p className={styles.totalAmount}>
-              {paymentInfo.amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              {paymentInfo.amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
             </p>
             {paymentInfo.expiresAt && (
               <Countdown

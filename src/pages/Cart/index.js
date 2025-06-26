@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FiShoppingCart,
-  FiTrash2,
-  FiPlus,
-  FiMinus,
-  FiArrowLeft,
-  FiInfo,
-  FiCheckCircle,
-  FiAlertCircle,
-} from "react-icons/fi";
+
+import { FiShoppingCart, FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiInfo, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 
 import { CartContext } from "../../contexts/CartContext";
+
 import { CartSkeleton } from "../../containers/Skeletons";
+
 import ToastService from "../../services/toastservice";
+
 import api from "../../services/api";
+
 import styles from "./style.module.css";
 
 class Cart extends Component {
@@ -96,7 +92,7 @@ class Cart extends Component {
     }
 
     if (item.stock && newQuantity > item.stock) {
-      ToastService.show({ type: 'error', message: `Estoque máximo: ${item.stock}` });
+      ToastService.show({ type: "error", message: `Estoque máximo: ${item.stock}` });
       newQuantity = item.stock;
     }
 
@@ -112,7 +108,7 @@ class Cart extends Component {
   handleIncrement = (item) => {
     const { updateQuantity } = this.props.cart;
     if (item.stock && item.quantity >= item.stock) {
-      ToastService.show({ type: 'info', message: 'Você atingiu o estoque máximo.' });
+      ToastService.show({ type: "info", message: "Você atingiu o estoque máximo." });
       return;
     }
     updateQuantity(item.id, item.quantity + 1);
@@ -158,7 +154,7 @@ class Cart extends Component {
                   const hasStockError = item.stock && item.quantity > item.stock;
 
                   return (
-                    <div key={item.id} className={`${styles.cartItem} ${hasStockError ? styles.itemError : ''}`}>
+                    <div key={item.id} className={`${styles.cartItem} ${hasStockError ? styles.itemError : ""}`}>
                       <div className={styles.itemDetails}>
                         <h3 className={styles.itemName}>{item.name}</h3>
                         <p className={styles.itemPrice}>{Number(item.price).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>

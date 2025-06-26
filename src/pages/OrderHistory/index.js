@@ -1,22 +1,14 @@
 import React, { Component } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FiArchive,
-  FiCalendar,
-  FiHash,
-  FiChevronDown,
-  FiChevronUp,
-  FiXCircle,
-  FiCreditCard,
-  FiCheckCircle,
-  FiAlertTriangle,
-  FiInfo,
-  FiEye,
-  FiLoader,
-} from "react-icons/fi";
+
+import { FiArchive, FiCalendar, FiHash, FiChevronDown, FiChevronUp, FiXCircle, FiCreditCard, FiCheckCircle, FiAlertTriangle, FiInfo, FiEye, FiLoader } from "react-icons/fi";
+
 import { OrderCardSkeleton } from "../../containers/Skeletons";
+
 import ToastService from "../../services/toastservice";
+
 import api from "../../services/api";
+
 import styles from "./style.module.css";
 
 class OrderHistory extends Component {
@@ -162,7 +154,7 @@ class OrderHistory extends Component {
         <Link
           to={`/order/${order.publicId}`}
           className={`${styles.actionButton} ${styles.detailsButton}`}
-          style={isAnyProcessing ? { pointerEvents: 'none', opacity: 0.5 } : {}}
+          style={isAnyProcessing ? { pointerEvents: "none", opacity: 0.5 } : {}}
         >
           <FiEye /> Ver Detalhes
         </Link>
@@ -190,7 +182,7 @@ class OrderHistory extends Component {
               <header
                 className={styles.orderHeader}
                 onClick={isAnyProcessing ? undefined : () => this.handleToggleOrder(order.id)}
-                style={{ cursor: isAnyProcessing ? 'not-allowed' : 'pointer' }}
+                style={{ cursor: isAnyProcessing ? "not-allowed" : "pointer" }}
               >
                 <div className={styles.orderInfo}>
                   <FiHash />

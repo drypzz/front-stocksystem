@@ -252,8 +252,6 @@
    line-height: 1.5;
 }
 
-/* Adicione estas classes ao final do seu Shop/style.module.css */
-
 .headerActions {
   display: flex;
   align-items: center;

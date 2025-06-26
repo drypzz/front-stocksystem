@@ -228,3 +228,44 @@
     font-size: 1.25rem;
     margin: 1rem 0 0 0;
 }
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.deletingOverlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    background-color: #0f172a;
+    color: #f1f5f9;
+    z-index: 1000;
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    font-size: 3rem;
+    animation: spin 1.5s linear infinite;
+    color: #38bdf8;
+}
+
+.deletingTitle {
+    font-size: 1.75rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.deletingSubtitle {
+    font-size: 1rem;
+    color: #94a3b8;
+    max-width: 350px;
+}
