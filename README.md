@@ -85,7 +85,7 @@ Para executar este projeto localmente, siga os passos abaixo.
 
 1.  **Clone os repositórios:**
     ```bash
-    git clone [https://github.com/drypzz/front-stocksystem.git](https://github.com/drypzz/front-stocksystem.git)
+    git clone git@github.com:drypzz/front-stocksystem.git
     ```
 
 2.  **Instale as dependências de ambos os projetos:**
