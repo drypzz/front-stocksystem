@@ -215,7 +215,7 @@
   line-height: 1; 
 }
 
-@media (max-width: 960px) {
+@media screen and (max-width: 960px) {
   .brand {
     height: 35px;
   }

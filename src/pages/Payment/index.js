@@ -30,7 +30,6 @@ class Payment extends Component {
       return;
     }
     this.apiRequestInitiated = true;
-
     this.checkOrderStatusAndProceed();
   }
 
@@ -47,8 +46,6 @@ class Payment extends Component {
     try {
       const response = await api.get(`/order/${publicId}`);
       const currentStatus = response.data.paymentStatus;
-
-      console.log(response.data)
 
       switch (currentStatus) {
         case "pending":
@@ -152,106 +149,107 @@ class Payment extends Component {
       return <PaymentSkeleton />;
     }
 
+    let icon, title, content;
+
     switch (status) {
       case "awaiting":
-        return (
+        icon = <FiClock className={`${styles.statusIcon} ${styles.iconPending}`} />;
+        title = "Aguardando Pagamento";
+        content = (
           <>
-            <div className={styles.statusContentWrapper}>
-              <FiClock
-                className={styles.statusIcon}
-                style={{ color: "#f59e0b" }}
+            <p className={styles.totalAmount}>
+              {paymentInfo.amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+            </p>
+            {paymentInfo.expiresAt && (
+              <Countdown
+                expirationTime={paymentInfo.expiresAt}
+                onExpire={this.handleExpire}
               />
-              <h2 className={styles.statusTitle}>Aguardando Pagamento</h2>
-              <p className={styles.totalAmount}>
-                Valor a pagar: {paymentInfo.amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-              </p>
-              {paymentInfo.expiresAt && (
-                <Countdown
-                  expirationTime={paymentInfo.expiresAt}
-                  onExpire={this.handleExpire}
-                />
-              )}
-              <p className={styles.statusSubtitle}>
-                Escaneie o QR Code abaixo com o app do seu banco.
-              </p>
+            )}
+            <p className={styles.statusSubtitle}>
+              Escaneie o código abaixo para pagar via PIX.
+            </p>
+            <div className={styles.qrCodeWrapper}>
               <img
                 draggable="false"
-                src={`${paymentInfo.qrCodeBase64}`}
+                src={paymentInfo.qrCodeBase64}
                 alt="PIX QR Code"
                 className={styles.qrCode}
               />
-              <div className={styles.pixCopyContainer}>
-                <input
-                  type="text"
-                  readOnly
-                  value={paymentInfo.qrCode}
-                  className={styles.pixCopyPaste}
-                />
-                <button
-                  onClick={() => this.copyToClipboard(paymentInfo.qrCode)}
-                  className={styles.copyButton}
-                >
-                  <FiCopy />
-                </button>
-              </div>
-              <small className={styles.copyHelpText}>
-                Clique no ícone para copiar o código PIX.
-              </small>
             </div>
+            <div className={styles.pixCopyContainer}>
+              <input
+                type="text"
+                readOnly
+                value={paymentInfo.qrCode}
+                className={styles.pixCopyPaste}
+              />
+              <button
+                onClick={() => this.copyToClipboard(paymentInfo.qrCode)}
+                className={styles.copyButton}
+                aria-label="Copiar código PIX"
+              >
+                <FiCopy />
+              </button>
+            </div>
+            <small className={styles.copyHelpText}>
+              Ou clique para copiar o código PIX.
+            </small>
           </>
         );
+        break;
 
       case "approved":
-        return (
+        icon = <FiCheckCircle className={`${styles.statusIcon} ${styles.iconApproved}`} />;
+        title = "Pagamento Aprovado!";
+        content = (
           <>
-            <div className={styles.statusContentWrapper}>
-              <FiCheckCircle
-                className={styles.statusIcon}
-                style={{ color: "#10b981" }}
-              />
-              <h2 className={styles.statusTitle}>Pagamento Aprovado!</h2>
-              <p className={styles.statusSubtitle}>
-                Seu pedido foi confirmado e logo será preparado para envio.
-              </p>
-              <Link to="/orders" className={styles.actionButton}>
-                Ver Meus Pedidos
-              </Link>
-            </div>
+            <p className={styles.statusSubtitle}>
+              Seu pedido foi confirmado e logo será preparado para envio.
+            </p>
+            <Link to="/orders" className={`${styles.actionButton} ${styles.primaryButton}`}>
+              Ver Meus Pedidos
+            </Link>
           </>
         );
+        break;
 
       case "failed":
-        return (
+        icon = <FiXCircle className={`${styles.statusIcon} ${styles.iconFailed}`} />;
+        title = "Falha no Pagamento";
+        content = (
           <>
-            <div className={styles.statusContentWrapper}>
-              <FiXCircle
-                className={styles.statusIcon}
-                style={{ color: "#ef4444" }}
-              />
-              <h2 className={styles.statusTitle}>Falha no Pedido</h2>
-              <p className={styles.statusSubtitle}>{error}</p>
-              <Link to="/orders" className={styles.actionButton}>
-                Voltar ao Histórico
-              </Link>
-            </div>
+            <p className={styles.statusSubtitle}>{error}</p>
+            <Link to="/orders" className={`${styles.actionButton} ${styles.secondaryButton}`}>
+              Voltar ao Histórico
+            </Link>
           </>
         );
+        break;
 
       default:
         return null;
     }
+
+    return (
+      <div className={styles.statusContentWrapper}>
+        {icon}
+        <h2 className={styles.statusTitle}>{title}</h2>
+        {content}
+      </div>
+    );
   };
 
   render() {
     return (
-      <div className={styles.container}>
+      <main className={styles.container}>
         <div className={styles.paymentBox}>
           <Link to="/orders" className={styles.backLink}>
-            <FiArrowLeft /> Voltar para o Histórico
+            <FiArrowLeft /> Voltar
           </Link>
           {this.renderContent()}
         </div>
-      </div>
+      </main>
     );
   }
 }

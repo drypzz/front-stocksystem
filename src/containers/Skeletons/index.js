@@ -73,13 +73,15 @@ export const OrderDetailSkeleton = () => {
 export const OrderCardSkeleton = () => {
     return (
         <div className={styles.skeletonOrderCard}>
-            <div className={styles.skeletonOrderHeader}>
+            <header className={styles.skeletonOrderHeader}>
                 <div className={styles.skeletonOrderInfoGroup}>
-                    <div className={styles.skeletonLine} style={{ width: '120px', height: '18px' }} />
-                    <div className={styles.skeletonLine} style={{ width: '160px', height: '18px' }} />
+                    <div className={styles.skeletonLine} style={{ width: '250px', height: '20px' }} />
                 </div>
-                <div className={styles.skeletonLine} style={{ width: '24px', height: '24px' }} />
-            </div>
+                <div className={styles.skeletonOrderActionsGroup}>
+                    <div className={styles.skeletonLine} style={{ width: '110px', height: '28px', borderRadius: '999px' }} />
+                    <div className={styles.skeletonLine} style={{ width: '24px', height: '24px', borderRadius: '4px' }} />
+                </div>
+            </header>
         </div>
     );
 };
@@ -140,9 +142,18 @@ export const ProfileSkeleton = () => {
 };
 
 export const PaymentSkeleton = () => (
-    <div className={styles.skeletonContainer}>
-        <div className={styles.skeletonQr}></div>
-        <div className={styles.skeletonText}></div>
-        <div className={styles.skeletonTextSmall}></div>
+    <div className={styles.skeletonPaymentWrapper}>
+        <div className={styles.skeletonLine} style={{ width: '56px', height: '56px', borderRadius: '50%', marginBottom: '1rem' }} />
+        <div className={styles.skeletonLine} style={{ width: '70%', height: '28px', marginBottom: '1rem' }} />
+        <div className={styles.skeletonLine} style={{ width: '50%', height: '36px', marginBottom: '1.5rem' }} />
+        <div className={styles.skeletonLine} style={{ width: '85%', height: '16px', marginBottom: '1.5rem' }} />
+        <div className={styles.skeletonQrWrapper}>
+            <div className={styles.skeletonLine} style={{ width: '250px', height: '250px', borderRadius: '6px' }} />
+        </div>
+        <div className={styles.skeletonCopyContainer}>
+            <div className={styles.skeletonLine} style={{ flexGrow: 1, height: '45px' }} />
+            <div className={styles.skeletonLine} style={{ width: '48px', height: '45px', borderRadius: '0 6px 6px 0' }} />
+        </div>
+        <div className={styles.skeletonLine} style={{ width: '60%', height: '12px' }} />
     </div>
 );

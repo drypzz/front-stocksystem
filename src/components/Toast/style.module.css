@@ -147,7 +147,7 @@
     color: #f1f5f9;
 }
 
-@media (max-width: 960px) {
+@media screen and (max-width: 960px) {
     .toastContainer {
         top: 20px;
         left: 50%;

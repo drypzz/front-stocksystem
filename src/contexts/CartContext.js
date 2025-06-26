@@ -42,7 +42,6 @@ export const CartProvider = ({ children }) => {
         return prevItems.filter(item => item.id !== productId);
       }
       if (newQuantity > stockLimit) {
-        ToastService.show({ type: "info", message: "Quantidade máxima de estoque atingida." });
         return prevItems;
       }
       return prevItems.map(item =>

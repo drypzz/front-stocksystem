@@ -1,52 +1,85 @@
-# 📦 StockSystem - Front-end
+# 🛒 StockSystem - E-commerce Completo
 
-> Interface de usuário (UI) para o API StockSystem. Permite a interação visual com a API para gerenciar produtos, categorias e pedidos de forma intuitiva.
-
-[![Versão](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
-[![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen.svg)]()
-[![Tecnologia](https://img.shields.io/badge/react-18.2.0-61DAFB?logo=react)]()
+> Uma aplicação full-stack que simula um sistema de e-commerce, com gerenciamento de produtos, carrinho de compras e um fluxo de pagamento ponta-a-ponta integrado com PIX via Mercado Pago.
 
 <p align="center">
-  <img src="https://github.com/drypzz/front-stocksystem/blob/master/layout/screenshot.png" alt="Layout do StockSystem" width="700"/>
+  <a href="https://stksystem.vercel.app" target="_blank">
+    <img alt="Deploy na Vercel" src="https://img.shields.io/badge/Ver%20Demo-stksystem.vercel.app-%23000000?style=for-the-badge&logo=vercel">
+  </a>
+</p>
+
+[![Status](https://img.shields.io/badge/status-ativo-brightgreen.svg?style=for-the-badge)]()
+[![Tecnologia](https://img.shields.io/badge/React-Class%20Components-61DAFB?style=for-the-badge&logo=react)]()
+
+<p align="center">
+  <img src="https://github.com/drypzz/front-stocksystem/blob/master/layout/screenshot.png" alt="Layout do StockSystem" width="750"/>
 </p>
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## 📖 Tabela de Conteúdos
 
-- ✅ **[React.js](https://reactjs.org/)** - Biblioteca para construção da interface de usuário.
-- ✅ **[React Router Dom](https://reactrouter.com/)** - Para gerenciamento de rotas na aplicação.
-- ✅ **[Axios](https://axios-http.com/)** - Cliente HTTP para realizar requisições à API.
-- ✅ **[JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)** - Linguagem de programação principal.
-- ✅ **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)** - Para estilização dos componentes.
+* [Sobre o Projeto](#-sobre-o-projeto)
+* [Funcionalidades](#-funcionalidades)
+* [Tecnologias e Arquitetura](#-tecnologias-e-arquitetura)
+* [Como Começar](#-como-começar)
+* [Links Importantes](#-links-importantes)
+* [Desenvolvedor](#-desenvolvedor)
 
 ---
 
 ## 🎯 Sobre o Projeto
 
-**StockSystem** é a interface de usuário desenvolvida para interagir com a [API StockSystem](https://github.com/drypzz/api-StockSystem). O objetivo deste projeto é fornecer uma plataforma visualmente amigável e intuitiva para o gerenciamento de estoque, permitindo aos usuários realizar operações como cadastrar, visualizar, editar e excluir produtos de forma eficiente.
+O **StockSystem** é uma aplicação full-stack que vai além de um simples gerenciamento de estoque. Ele foi projetado para ser um protótipo funcional de e-commerce, demonstrando um fluxo completo desde a visualização de produtos até a finalização do pagamento.
 
-Este projeto foi criado como parte de um esforço de aprendizado e colaboração para demonstrar a integração entre um front-end moderno em React e uma API back-end.
+O front-end, construído com **React em Componentes de Classe**, oferece uma interface de usuário intuitiva para clientes e administradores. O back-end, desenvolvido em **Node.js** e hospedado no **Supabase**, gerencia toda a lógica de negócio, autenticação e, crucialmente, a integração com a API do **Mercado Pago** para processamento de pagamentos via **PIX**, incluindo a geração de QR Codes dinâmicos com a logo da marca.
 
----
-
-## ✨ Funcionalidades Principais
-
-- **Visualização de Produtos:** Liste todos os produtos disponíveis no estoque.
-- **Cadastro de Produtos:** Adicione novos produtos ao sistema com informações detalhadas.
-- **Edição de Produtos:** Atualize os dados de produtos já existentes.
-- **Exclusão de Produtos:** Remova produtos do estoque.
-- **Interface Responsiva:** Layout adaptável para diferentes tamanhos de tela.
+Este projeto é um case prático de integração de tecnologias modernas para criar uma experiência de compra digital robusta e completa.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## ✨ Funcionalidades
 
-Este projeto foi desenvolvido com as seguintes tecnologias:
+### 🛒 Fluxo de E-commerce (Cliente)
 
-- **[JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)**
-- **[React.js](https://reactjs.org/)**
-- **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)**
+* ✅ **Autenticação de Usuários:** Sistema de cadastro e login.
+* ✅ **Navegação na Loja:** Visualização de produtos disponíveis.
+* ✅ **Carrinho de Compras:** Adicionar, remover e atualizar a quantidade de produtos (com validação de estoque em tempo real).
+* ✅ **Criação de Pedidos:** Finalizar a compra e gerar um pedido formal no sistema.
+* ✅ **Histórico de Pedidos:** Visualizar todos os pedidos feitos, com status e detalhes.
+* ✅ **Validação de Dados:** O histórico trata de forma inteligente os pedidos que contêm produtos que foram deletados posteriormente.
+* ✅ **Pagamento com PIX:** Integração completa com o Mercado Pago para gerar cobranças PIX.
+* ✅ **QR Code Personalizado:** Geração de um QR Code de pagamento que inclui a logo da loja no centro.
+* ✅ **Cancelamento de Pedidos:** O usuário pode cancelar pedidos pendentes, com a ação refletindo no back-end e no gateway de pagamento.
+
+### 🗃️ Gerenciamento (Admin)
+
+* ✅ **CRUD de Produtos:** Criar, ler, atualizar e deletar produtos no sistema.
+* ✅ **CRUD de Categorias:** Organizar produtos em diferentes categorias.
+
+---
+
+## 🛠️ Tecnologias e Arquitetura
+
+Este projeto é dividido em duas partes principais:
+
+### **Front-end (Este Repositório)**
+
+* **[React.js](https://reactjs.org/) (Componentes de Classe):** Biblioteca principal para a construção da interface, utilizando a arquitetura de classes.
+* **[React Router Dom](https://reactrouter.com/):** Para gerenciamento de rotas de navegação (SPA).
+* **[Context API](https://reactjs.org/docs/context.html):** Utilizada para o gerenciamento de estado global do carrinho de compras.
+* **[Axios](https://axios-http.com/):** Cliente HTTP para realizar as requisições à API de forma segura.
+* **[CSS Modules](https://github.com/css-modules/css-modules):** Para estilização encapsulada e componentizada, evitando conflitos de classes.
+* **[Vercel](https://vercel.com/):** Plataforma de hospedagem para deploy contínuo do front-end.
+
+### **Back-end ([Ver Repositório](https://github.com/drypzz/api-StockSystem))**
+
+* **[Node.js](https://nodejs.org/):** Ambiente de execução para o servidor.
+* **[Express.js](https://expressjs.com/):** Framework para a construção da API RESTful.
+* **[Sequelize](https://sequelize.org/):** ORM (Object-Relational Mapper) para interagir com o banco de dados de forma segura e produtiva.
+* **[Supabase](https://supabase.io/):** Utilizado como provedor de infraestrutura, incluindo o banco de dados **PostgreSQL**.
+* **[Mercado Pago SDK](https://www.mercadopago.com.br/developers):** Para integração com o gateway de pagamento e geração de cobranças PIX.
+* **[JSON Web Tokens (JWT)](https://jwt.io/):** Para gerenciamento de sessões e autenticação de rotas.
 
 ---
 
@@ -56,47 +89,41 @@ Para executar este projeto localmente, siga os passos abaixo.
 
 ### Pré-requisitos
 
-- Certifique-se de ter o [Node.js](https://nodejs.org/en/) (versão 14 ou superior) e o [npm](https://www.npmjs.com/) instalados em sua máquina.
+* [Node.js](https://nodejs.org/en/) (versão 16 ou superior) e [npm](https://www.npmjs.com/) instalados.
+* Uma conta no [Supabase](https://supabase.io/) para o banco de dados e uma conta no [Mercado Pago](https://www.mercadopago.com.br/developers) para obter as credenciais de pagamento.
 
-### Instalação e Execução
+### Instalação
 
 1.  **Clone os repositórios:**
     ```bash
-    # Clone o repositório da API (back-end)
-    git clone git@github.com:drypzz/api-StockSystem.git
-
     # Clone o repositório do Front-end
-    git clone git@github.com:drypzz/front-stocksystem.git
+    git clone [https://github.com/drypzz/front-stocksystem.git](https://github.com/drypzz/front-stocksystem.git)
     ```
 
 2.  **Instale as dependências de ambos os projetos:**
     ```bash
-    # Navegue até o diretório da API e instale as dependências
-    cd api-StockSystem
-    npm install
-
-    # Navegue até o diretório do front-end e instale as dependências
-    cd front-stocksystem
-    npm install
+    cd ../front-stocksystem && npm install
     ```
 
-3.  **Inicie o servidor da API (Back-end):**
-    ```bash
-    # No diretório api-StockSystem
-    npm start
-    ```
-    O servidor será iniciado na porta `3001`.
+### Execução
 
-4.  **Inicie a aplicação React (Front-end):**
+1.  **Inicie a aplicação React (Front-end):**
     ```bash
     # Em um novo terminal, no diretório front-stocksystem
     npm start
     ```
-    A aplicação será iniciada e aberta em seu navegador na porta `3000`.
+    A aplicação será iniciada em `http://localhost:3000`.
 
 ---
 
-## 💻 Equipe
+## 🔗 Links Importantes
+
+-   **Aplicação Online:** [https://stksystem.vercel.app](https://stksystem.vercel.app)
+-   **Repositório do Back-end:** [https://github.com/drypzz/api-StockSystem](https://github.com/drypzz/api-StockSystem)
+
+---
+
+## 💻 Desenvolvedor
 
 Este projeto foi desenvolvido por:
 
@@ -107,27 +134,6 @@ Este projeto foi desenvolvido por:
         <img src="https://avatars.githubusercontent.com/u/79218936?v=4" width="100px;" alt="Foto de Gustavo"/>
         <br />
         <sub><b>Gustavo (@drypzz)</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/function404">
-        <img src="https://avatars.githubusercontent.com/u/79523461?v=4" width="100px;" alt="Foto de Lincoln"/>
-        <br />
-        <sub><b>Lincoln (@function404)</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Felipe-G-Schmitt">
-        <img src="https://avatars.githubusercontent.com/u/79218944?v=4" width="100px;" alt="Foto de Felipe Schmitt"/>
-        <br />
-        <sub><b>Felipe Schmitt (@Felipe-G-Schmitt)</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Felipe-Vieira15">
-        <img src="https://avatars.githubusercontent.com/u/79219261?v=4" width="100px;" alt="Foto de Felipe Vieira"/>
-        <br />
-        <sub><b>Felipe Vieira (@Felipe-Vieira15)</b></sub>
       </a>
     </td>
   </tr>

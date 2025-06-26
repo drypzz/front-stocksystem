@@ -87,7 +87,7 @@
   transform: translateX(5px);
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 960px) {
   .mainContent {
     padding: 2.5rem 1.5rem;
     gap: 1.25rem;

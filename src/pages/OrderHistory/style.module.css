@@ -3,9 +3,20 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -14,6 +25,7 @@
   justify-content: center;
   padding: 2rem 1rem;
   min-height: calc(100vh - 80px);
+  background-color: #0f172a;
 }
 
 .content {
@@ -47,7 +59,7 @@
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   overflow: hidden;
 }
 
@@ -73,6 +85,7 @@
   gap: 0.5rem;
   font-size: 0.9rem;
 }
+
 .orderInfo strong {
   color: #e2e8f0;
 }
@@ -86,6 +99,7 @@
   transition: transform 0.3s ease;
   color: #94a3b8;
 }
+
 .orderCard.active .toggleIcon {
   transform: rotate(180deg);
 }
@@ -116,6 +130,7 @@
   border-bottom: 1px dashed #293548;
   padding-bottom: 1rem;
 }
+
 .productItem:last-child {
   border-bottom: none;
   padding-bottom: 0;
@@ -159,6 +174,7 @@
   flex-direction: column;
   color: #cbd5e1;
 }
+
 .totalContainer span:first-child {
   font-size: 0.9rem;
   color: #94a3b8;
@@ -197,7 +213,8 @@
   border-color: #38bdf8;
   color: #38bdf8;
 }
-.payButton:hover {
+
+.payButton:hover:not(:disabled) {
   background-color: rgba(56, 189, 248, 0.1);
   color: #7dd3fc;
 }
@@ -206,7 +223,8 @@
   border-color: #f43f5e;
   color: #f43f5e;
 }
-.cancelButton:hover {
+
+.cancelButton:hover:not(:disabled) {
   background-color: rgba(244, 63, 94, 0.1);
   color: #fb7185;
 }
@@ -215,6 +233,7 @@
   border-color: #4f46e5;
   color: #a5b4fc;
 }
+
 .detailsButton:hover {
   background-color: rgba(79, 70, 229, 0.1);
   color: #c7d2fe;
@@ -242,10 +261,12 @@
   background-color: #f59e0b20;
   color: #f59e0b;
 }
+
 .statusApproved {
   background-color: #10b98120;
   color: #10b981;
 }
+
 .statusCancelled {
   background-color: #64748b20;
   color: #64748b;
@@ -263,22 +284,53 @@
   align-items: center;
   gap: 1rem;
 }
+
 .feedbackState svg {
   color: #38bdf8;
 }
+
 .feedbackState h3 {
   color: #f1f5f9;
   font-size: 1.5rem;
   margin: 0;
 }
+
 .feedbackState p {
   margin: 0;
   max-width: 450px;
 }
+
 .feedbackState a {
   color: #38bdf8;
   text-decoration: none;
 }
+
+.processing {
+  opacity: 0.7;
+  border-style: dashed;
+  pointer-events: none;
+}
+
+.processingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 
 @media screen and (max-width: 960px) {
   .title {
@@ -306,7 +358,7 @@
 
   .orderFooter {
     flex-direction: column;
-    align-items: stretch; /* Faz os itens se esticarem */
+    align-items: stretch;
   }
 
   .buttonGroup {

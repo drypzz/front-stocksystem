@@ -117,31 +117,29 @@
 
 .skeletonOrderHeader {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    padding: 1rem 1.5rem;
-    background-color: #334155;
+    gap: 1rem 1.5rem;
+    padding: 1.25rem 1.5rem;
 }
 
 .skeletonOrderInfoGroup {
     display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.skeletonOrderActionsGroup {
+    display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .skeletonCartGrid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2.5rem;
-}
-
-@media (max-width: 960px) {
-    .skeletonCartGrid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .skeletonCartItem {
@@ -185,12 +183,6 @@
     gap: 2.5rem;
 }
 
-@media (max-width: 960px) {
-    .skeletonProfileLayout {
-        grid-template-columns: 1fr;
-    }
-}
-
 .skeletonProfileSidebar {
     display: flex;
     flex-direction: column;
@@ -223,32 +215,61 @@
 }
 
 
-.skeletonContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+.skeletonPaymentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
-.skeletonQr {
-  width: 250px;
-  height: 250px;
-  background-color: #334155;
-  border-radius: 8px;
-  margin: 1.5rem 0;
+.skeletonQrWrapper {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #334155;
+    border-radius: 12px;
 }
 
-.skeletonText {
-  width: 80%;
-  height: 2.25rem;
-  background-color: #334155;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+.skeletonCopyContainer {
+    display: flex;
+    width: 100%;
+    max-width: 330px;
+    margin: 1.5rem 0 0.5rem;
 }
 
-.skeletonTextSmall {
-  width: 60%;
-  height: 1rem;
-  background-color: #334155;
-  border-radius: 4px;
+.skeletonCopyContainer>div:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.skeletonCopyContainer>div:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+@media screen and (max-width: 960px) {
+    .skeletonCartGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .skeletonOrderHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        position: relative;
+    }
+
+    .skeletonOrderActionsGroup {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+    }
+
+    .skeletonOrderActionsGroup>.skeletonLine:last-child {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.5rem;
+    }
+
+    .skeletonProfileLayout {
+        grid-template-columns: 1fr;
+    }
 }

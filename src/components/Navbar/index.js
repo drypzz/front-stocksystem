@@ -121,7 +121,7 @@ export default class Navbar extends Component {
                 <FiShoppingCart />
                 <span>Carrinho</span>
                 {totalItemsInCart > 0 && (
-                  <span className={styles.cartCount}>{totalItemsInCart}</span>
+                  <span className={styles.cartCount}>{totalItemsInCart > 99 ? `+99` : totalItemsInCart}</span>
                 )}
               </NavLink>
 

@@ -50,3 +50,9 @@
 .modal-close-button:hover {
    color: #38bdf8;
 }
+
+@media screen and (max-width: 960px){
+   .container{
+      padding: 20px;
+   }
+}

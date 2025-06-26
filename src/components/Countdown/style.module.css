@@ -59,7 +59,7 @@
     }
 }
 
-@media (min-width: 960px) {
+@media screen and (min-width: 960px) {
     .countdown {
         padding: 0.75rem 1.25rem;
         font-size: 1rem;

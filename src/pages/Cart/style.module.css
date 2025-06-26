@@ -236,7 +236,61 @@
   margin: 0 0 0.5rem 0;
 }
 
-@media (max-width: 960px) {
+.quantityInput {
+  width: 50px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f1f5f9;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.25rem;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.itemError {
+  border-color: #ef4444;
+  background-color: rgba(148, 26, 26, 0.1);
+}
+
+.stockErrorMessage {
+  flex-basis: 100%;
+  text-align: right;
+  color: #fca5a5;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.cartInvalidMessage {
+  text-align: center;
+  color: #fca5a5;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.checkoutButton:disabled {
+  background-color: #475569;
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 960px) {
   .cartGrid {
     grid-template-columns: 1fr;
   }

@@ -103,7 +103,7 @@
    transform: translateY(-1px) scale(1.02);
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 960px) {
    .contentWrapper {
       padding: 2.5rem 1.5rem;
    }

@@ -12,6 +12,7 @@ import {
   FiAlertTriangle,
   FiInfo,
   FiEye,
+  FiLoader,
 } from "react-icons/fi";
 import { OrderCardSkeleton } from "../../containers/Skeletons";
 import ToastService from "../../services/toastservice";
@@ -26,10 +27,16 @@ class OrderHistory extends Component {
       loading: true,
       error: null,
       openOrderId: null,
+      processingOrderId: null,
     };
+    this.apiRequestInitiated = false;
   }
 
   componentDidMount() {
+    if (this.apiRequestInitiated) {
+      return;
+    }
+    this.apiRequestInitiated = true;
     this.loadOrders();
   }
 
@@ -49,26 +56,7 @@ class OrderHistory extends Component {
   };
 
   isOrderValid = (order) => {
-    if (
-      !order ||
-      !Array.isArray(order.order_products) ||
-      !Array.isArray(order.products)
-    ) {
-      return false;
-    }
-
-    if (order.order_products.length === 0) {
-      return true;
-    }
-
-    if (
-      order.products.length !== order.order_products.length ||
-      order.products.includes(null)
-    ) {
-      return false;
-    }
-
-    return true;
+    return order.isDataIntact;
   };
 
   calculateOrderTotal = (products) => {
@@ -82,41 +70,17 @@ class OrderHistory extends Component {
 
   renderStatusBadge = (status) => {
     const statusMap = {
-      pending: {
-        text: "Pendente",
-        icon: <FiAlertTriangle />,
-        className: styles.statusPending,
-      },
-      approved: {
-        text: "Aprovado",
-        icon: <FiCheckCircle />,
-        className: styles.statusApproved,
-      },
-      cancelled: {
-        text: "Cancelado",
-        icon: <FiXCircle />,
-        className: styles.statusCancelled,
-      },
-      expired: {
-        text: "Expirado",
-        icon: <FiXCircle />,
-        className: styles.statusCancelled,
-      },
+      pending: { text: "Pendente", icon: <FiAlertTriangle />, className: styles.statusPending, },
+      approved: { text: "Aprovado", icon: <FiCheckCircle />, className: styles.statusApproved, },
+      cancelled: { text: "Cancelado", icon: <FiXCircle />, className: styles.statusCancelled, },
+      expired: { text: "Expirado", icon: <FiXCircle />, className: styles.statusCancelled, },
     };
-    const { text, icon, className } = statusMap[status] || {
-      text: status,
-      icon: <FiInfo />,
-      className: "",
-    };
-    return (
-      <span className={`${styles.statusBadge} ${className}`}>
-        {icon}
-        {text}
-      </span>
-    );
+    const { text, icon, className } = statusMap[status] || { text: status, icon: <FiInfo />, className: "" };
+    return (<span className={`${styles.statusBadge} ${className}`}>{icon}{text}</span>);
   };
 
   handleToggleOrder = (orderId) => {
+    if (this.state.processingOrderId) return;
     this.setState((prevState) => ({
       openOrderId: prevState.openOrderId === orderId ? null : orderId,
     }));
@@ -137,6 +101,7 @@ class OrderHistory extends Component {
   };
 
   performCancelOrder = async (publicId) => {
+    this.setState({ processingOrderId: publicId });
     try {
       await api.delete(`/order/${publicId}`);
       ToastService.show({
@@ -155,22 +120,37 @@ class OrderHistory extends Component {
         type: "error",
         message,
       });
+    } finally {
+      this.setState({ processingOrderId: null });
     }
   };
 
-  renderActionButtons = (order) => {
+  renderActionButtons = (order, isProcessing, isAnyProcessing) => {
+    if (isProcessing) {
+      return (
+        <div className={styles.processingIndicator}>
+          <FiLoader className={styles.spinner} />
+          <span>Cancelando...</span>
+        </div>
+      );
+    }
+    if (!this.isOrderValid(order)) {
+      return <div className={styles.noActions}>Dados do pedido inconsistentes</div>;
+    }
     if (order.paymentStatus === "pending") {
       return (
         <>
           <button
             className={`${styles.actionButton} ${styles.payButton}`}
             onClick={(e) => this.handleGoToPayment(order.publicId, e)}
+            disabled={isAnyProcessing}
           >
             <FiCreditCard /> Pagar Agora
           </button>
           <button
             className={`${styles.actionButton} ${styles.cancelButton}`}
             onClick={(e) => this.handleCancelOrder(order, e)}
+            disabled={isAnyProcessing}
           >
             <FiXCircle /> Cancelar
           </button>
@@ -182,6 +162,7 @@ class OrderHistory extends Component {
         <Link
           to={`/order/${order.publicId}`}
           className={`${styles.actionButton} ${styles.detailsButton}`}
+          style={isAnyProcessing ? { pointerEvents: 'none', opacity: 0.5 } : {}}
         >
           <FiEye /> Ver Detalhes
         </Link>
@@ -191,22 +172,25 @@ class OrderHistory extends Component {
   };
 
   render() {
-    const { orders, loading, error, openOrderId } = this.state;
+    const { orders, loading, error, openOrderId, processingOrderId } = this.state;
 
     const renderOrderCards = () => (
       <section className={styles.orderList}>
         {orders.map((order) => {
           const isOpen = openOrderId === order.id;
           const isValid = this.isOrderValid(order);
+          const isProcessing = processingOrderId === order.publicId;
+          const isAnyProcessing = processingOrderId !== null;
 
           return (
             <article
               key={order.id}
-              className={`${styles.orderCard} ${isOpen ? styles.active : ""}`}
+              className={`${styles.orderCard} ${isOpen ? styles.active : ""} ${isProcessing ? styles.processing : ""}`}
             >
               <header
                 className={styles.orderHeader}
-                onClick={() => this.handleToggleOrder(order.id)}
+                onClick={isAnyProcessing ? undefined : () => this.handleToggleOrder(order.id)}
+                style={{ cursor: isAnyProcessing ? 'not-allowed' : 'pointer' }}
               >
                 <div className={styles.orderInfo}>
                   <FiHash />
@@ -226,9 +210,8 @@ class OrderHistory extends Component {
                 </span>
               </header>
               <div
-                className={`${styles.collapsibleContent} ${
-                  isOpen ? styles.contentOpen : ""
-                }`}
+                className={`${styles.collapsibleContent} ${isOpen ? styles.contentOpen : ""
+                  }`}
               >
                 {isValid ? (
                   <>
@@ -247,7 +230,7 @@ class OrderHistory extends Component {
                               <span className={styles.productPrice}>
                                 {Number(
                                   product.price *
-                                    product.order_products.quantity
+                                  product.order_products.quantity
                                 ).toLocaleString("pt-BR", {
                                   style: "currency",
                                   currency: "BRL",
@@ -270,7 +253,7 @@ class OrderHistory extends Component {
                         </span>
                       </div>
                       <div className={styles.buttonGroup}>
-                        {this.renderActionButtons(order)}
+                        {this.renderActionButtons(order, isProcessing, isAnyProcessing)}
                       </div>
                     </footer>
                   </>
