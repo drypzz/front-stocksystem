@@ -1,6 +1,6 @@
-# 🛒 StockSystem - E-commerce Completo
+# 🛒 StockSystem - Gestão e Vendas com PIX
 
-> Uma aplicação full-stack que simula um sistema de e-commerce, com gerenciamento de produtos, carrinho de compras e um fluxo de pagamento ponta-a-ponta integrado com PIX via Mercado Pago.
+> Uma aplicação full-stack que simula um sistema de gestão de ponta-a-ponta, com controle de estoque, criação de pedidos e um fluxo de pagamento completo integrado com PIX via Mercado Pago.
 
 <p align="center">
   <a href="https://stksystem.vercel.app" target="_blank">
@@ -17,49 +17,38 @@
 
 ---
 
-## 📖 Tabela de Conteúdos
-
-* [Sobre o Projeto](#-sobre-o-projeto)
-* [Funcionalidades](#-funcionalidades)
-* [Tecnologias e Arquitetura](#-tecnologias-e-arquitetura)
-* [Como Começar](#-como-começar)
-* [Links Importantes](#-links-importantes)
-* [Desenvolvedor](#-desenvolvedor)
-
----
-
 ## 🎯 Sobre o Projeto
 
-O **StockSystem** é uma aplicação full-stack que vai além de um simples gerenciamento de estoque. Ele foi projetado para ser um protótipo funcional de e-commerce, demonstrando um fluxo completo desde a visualização de produtos até a finalização do pagamento.
+O **StockSystem** é uma aplicação full-stack projetada para ser um protótipo funcional de um sistema de gestão e vendas. A interface, construída com **React**, é unificada, permitindo que o próprio gestor controle o estoque e, ao mesmo tempo, simule e execute todo o fluxo de um cliente, desde a montagem do carrinho até a finalização do pagamento.
 
-O front-end, construído com **React em Componentes de Classe**, oferece uma interface de usuário intuitiva para clientes e administradores. O back-end, desenvolvido em **Node.js** e hospedado no **Supabase**, gerencia toda a lógica de negócio, autenticação e, crucialmente, a integração com a API do **Mercado Pago** para processamento de pagamentos via **PIX**, incluindo a geração de QR Codes dinâmicos com a logo da marca.
+O back-end, desenvolvido em **Node.js**, gerencia toda a lógica de negócio, autenticação e, crucialmente, a integração com a API do **Mercado Pago** para processamento de pagamentos via **PIX**.
 
-Este projeto é um case prático de integração de tecnologias modernas para criar uma experiência de compra digital robusta e completa.
-
----
-
-## ✨ Funcionalidades
-
-### 🛒 Fluxo de E-commerce (Cliente)
-
-* ✅ **Autenticação de Usuários:** Sistema de cadastro e login.
-* ✅ **Navegação na Loja:** Visualização de produtos disponíveis.
-* ✅ **Carrinho de Compras:** Adicionar, remover e atualizar a quantidade de produtos (com validação de estoque em tempo real).
-* ✅ **Criação de Pedidos:** Finalizar a compra e gerar um pedido formal no sistema.
-* ✅ **Histórico de Pedidos:** Visualizar todos os pedidos feitos, com status e detalhes.
-* ✅ **Validação de Dados:** O histórico trata de forma inteligente os pedidos que contêm produtos que foram deletados posteriormente.
-* ✅ **Pagamento com PIX:** Integração completa com o Mercado Pago para gerar cobranças PIX.
-* ✅ **QR Code Personalizado:** Geração de um QR Code de pagamento que inclui a logo da loja no centro.
-* ✅ **Cancelamento de Pedidos:** O usuário pode cancelar pedidos pendentes, com a ação refletindo no back-end e no gateway de pagamento.
-
-### 🗃️ Gerenciamento (Admin)
-
-* ✅ **CRUD de Produtos:** Criar, ler, atualizar e deletar produtos no sistema.
-* ✅ **CRUD de Categorias:** Organizar produtos em diferentes categorias.
+Este projeto é um case prático de integração de tecnologias modernas para criar uma experiência de gestão e venda digital robusta e completa.
 
 ---
 
-## 🛠️ Tecnologias e Arquitetura
+## ✨ Funcionalidades Principais
+
+* **🗃️ Gestão de Estoque:**
+    * CRUD completo de Produtos e Categorias para total controle do inventário.
+
+* **🛒 Fluxo de Pedidos:**
+    * **Carrinho de Compras:** Adição e remoção de produtos com um controle de quantidade interativo.
+    * **Validação de Estoque:** O sistema valida em tempo real a quantidade de itens no carrinho, desabilitando a finalização da compra e sinalizando visualmente os produtos com estoque insuficiente.
+    * **Criação de Pedidos:** Geração de pedidos formais a partir dos itens do carrinho.
+
+* **💳 Pagamentos e Histórico:**
+    * **Pagamento com PIX:** Integração ponta-a-ponta com o Mercado Pago para gerar cobranças PIX.
+    * **Histórico de Pedidos:** Visualização de todos os pedidos feitos, com status detalhado. O histórico trata de forma inteligente os pedidos que contêm produtos que foram deletados posteriormente, exibindo um alerta de inconsistência.
+    * **Cancelamento de Pedidos:** Permite o cancelamento de pedidos pendentes, com a ação refletindo no back-end e no gateway de pagamento.
+
+* **🖥️ Interface:**
+    * **Design Responsivo:** Layout adaptável para uma experiência consistente em desktops, tablets e celulares.
+    * **Feedback ao Usuário:** Componentes de *skeleton screen* para carregamentos suaves, e um sistema de notificações (`toast`) para feedback de ações.
+
+---
+
+## 🛠️ Tecnologias
 
 Este projeto é dividido em duas partes principais:
 
@@ -76,7 +65,7 @@ Este projeto é dividido em duas partes principais:
 
 * **[Node.js](https://nodejs.org/):** Ambiente de execução para o servidor.
 * **[Express.js](https://expressjs.com/):** Framework para a construção da API RESTful.
-* **[Sequelize](https://sequelize.org/):** ORM (Object-Relational Mapper) para interagir com o banco de dados de forma segura e produtiva.
+* **[Sequelize](https://sequelize.org/):** ORM para interagir com o banco de dados de forma segura e produtiva.
 * **[Supabase](https://supabase.io/):** Utilizado como provedor de infraestrutura, incluindo o banco de dados **PostgreSQL**.
 * **[Mercado Pago SDK](https://www.mercadopago.com.br/developers):** Para integração com o gateway de pagamento e geração de cobranças PIX.
 * **[JSON Web Tokens (JWT)](https://jwt.io/):** Para gerenciamento de sessões e autenticação de rotas.
@@ -96,13 +85,23 @@ Para executar este projeto localmente, siga os passos abaixo.
 
 1.  **Clone os repositórios:**
     ```bash
-    # Clone o repositório do Front-end
     git clone [https://github.com/drypzz/front-stocksystem.git](https://github.com/drypzz/front-stocksystem.git)
     ```
 
 2.  **Instale as dependências de ambos os projetos:**
     ```bash
     cd ../front-stocksystem && npm install
+    ```
+
+### Configuração de Ambiente
+
+1.  **Back-end:** Crie um arquivo `.env` na raiz do projeto `api-StockSystem` e preencha com as suas credenciais:
+    ```env
+    API_PORT=3001
+    DATABASE_URL=sua_string_de_conexao_do_supabase
+    MERCADO_PAGO_ACCESS_TOKEN=seu_token_de_acesso_do_mercado_pago
+    JWT_SECRET=seu_segredo_jwt_aleatorio
+    BACKEND_URL=http://localhost:3001
     ```
 
 ### Execução
@@ -121,20 +120,4 @@ Para executar este projeto localmente, siga os passos abaixo.
 -   **Aplicação Online:** [https://stksystem.vercel.app](https://stksystem.vercel.app)
 -   **Repositório do Back-end:** [https://github.com/drypzz/api-StockSystem](https://github.com/drypzz/api-StockSystem)
 
----
-
-## 💻 Desenvolvedor
-
-Este projeto foi desenvolvido por:
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/drypzz">
-        <img src="https://avatars.githubusercontent.com/u/79218936?v=4" width="100px;" alt="Foto de Gustavo"/>
-        <br />
-        <sub><b>Gustavo (@drypzz)</b></sub>
-      </a>
-    </td>
-  </tr>
-</table>
+> by drypzz
