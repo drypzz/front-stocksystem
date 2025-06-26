@@ -1,10 +1,8 @@
-/* Animação e Estilos de Base */
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -14,8 +12,8 @@
 .container {
   display: flex;
   justify-content: center;
-  padding: 2rem 1.5rem;
-  min-height: 100vh;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 80px);
 }
 
 .content {
@@ -35,34 +33,36 @@
   align-items: center;
   gap: 1rem;
   margin: 0;
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   color: #f1f5f9;
 }
 
-/* Estilos da Lista de Pedidos */
 .orderList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .orderCard {
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .orderCard.active {
   border-color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
 }
 
 .orderHeader {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.5fr auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   cursor: pointer;
   color: #94a3b8;
 }
@@ -71,25 +71,33 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.orderInfo strong {
+  color: #e2e8f0;
+}
+
+.orderStatusWrapper {
+  margin-left: auto;
+  padding-left: 1rem;
 }
 
 .toggleIcon {
   transition: transform 0.3s ease;
+  color: #94a3b8;
 }
-
-.active .toggleIcon {
+.orderCard.active .toggleIcon {
   transform: rotate(180deg);
 }
 
-/* Estilos do Conteúdo "Sanfona" */
 .collapsibleContent {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+  transition: max-height 0.4s ease-in-out;
 }
 
 .contentOpen {
-  max-height: 500px;
+  max-height: 600px;
 }
 
 .productList {
@@ -97,157 +105,212 @@
   border-top: 1px solid #334155;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .productItem {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   color: #cbd5e1;
+  border-bottom: 1px dashed #293548;
+  padding-bottom: 1rem;
+}
+.productItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
-.productPrice {
+.productName {
   font-weight: 500;
 }
 
-/* Estilos do Rodapé do Card */
+.productPrice {
+  font-weight: bold;
+  color: #f1f5f9;
+}
+
+.invalidOrderContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.05);
+  border-top: 1px solid #334155;
+}
+
 .orderFooter {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
   padding: 1rem 1.5rem;
   border-top: 1px solid #334155;
   background-color: #1a2436;
-  border-radius: 0 0 7px 7px;
 }
 
 .totalContainer {
+  display: flex;
+  flex-direction: column;
   color: #cbd5e1;
+}
+.totalContainer span:first-child {
+  font-size: 0.9rem;
+  color: #94a3b8;
 }
 
 .orderTotal {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #86efac;
-  margin-left: 0.5rem;
 }
 
 .buttonGroup {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-.approvedIndicator {
-  color: #86efac;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Estilos dos Botões de Ação */
-.payButton,
-.cancelButton {
+.actionButton {
   background: none;
   border: 1px solid #475569;
   color: #cbd5e1;
   padding: 0.6rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-weight: 500;
+  text-decoration: none;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .payButton {
   border-color: #38bdf8;
   color: #38bdf8;
 }
-
 .payButton:hover {
-  background-color: #38bdf8;
-  color: #fff;
+  background-color: rgba(56, 189, 248, 0.1);
+  color: #7dd3fc;
 }
 
 .cancelButton {
   border-color: #f43f5e;
   color: #f43f5e;
 }
-
 .cancelButton:hover {
-  background-color: #f43f5e;
-  color: #fff;
+  background-color: rgba(244, 63, 94, 0.1);
+  color: #fb7185;
 }
 
-/* Estilos dos Badges de Status */
+.detailsButton {
+  border-color: #4f46e5;
+  color: #a5b4fc;
+}
+.detailsButton:hover {
+  background-color: rgba(79, 70, 229, 0.1);
+  color: #c7d2fe;
+}
+
+.noActions {
+  color: #64748b;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 .statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: bold;
   text-align: center;
+  line-height: 1.2;
 }
 
 .statusPending {
   background-color: #f59e0b20;
   color: #f59e0b;
 }
-
 .statusApproved {
   background-color: #10b98120;
   color: #10b981;
 }
-
 .statusCancelled {
   background-color: #64748b20;
   color: #64748b;
 }
 
-/* Estados de Vazio e Erro */
-.emptyState,
-.errorState {
+.feedbackState {
   text-align: center;
   padding: 4rem 2rem;
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: 8px;
   color: #94a3b8;
-}
-
-.emptyIcon {
-  color: #38bdf8;
-  margin-bottom: 1.5rem;
-}
-
-.detailsButton {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  gap: 1rem;
 }
-
-.detailsButton:hover {
-  background-color: #0056b3;
+.feedbackState svg {
+  color: #38bdf8;
 }
-
-h3 {
+.feedbackState h3 {
   color: #f1f5f9;
   font-size: 1.5rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
 }
-
-a {
+.feedbackState p {
+  margin: 0;
+  max-width: 450px;
+}
+.feedbackState a {
   color: #38bdf8;
   text-decoration: none;
+}
+
+@media screen and (max-width: 960px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .orderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .orderStatusWrapper {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .toggleIcon {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+  }
+
+  .orderFooter {
+    flex-direction: column;
+    align-items: stretch; /* Faz os itens se esticarem */
+  }
+
+  .buttonGroup {
+    width: 100%;
+    flex-direction: column;
+  }
 }
