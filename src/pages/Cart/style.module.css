@@ -115,6 +115,17 @@
   padding: 0.25rem;
 }
 
+.quantityControl input {
+  width: 50px;
+  height: 32px;
+  background: transparent;
+  color: #f1f5f9;
+  border: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .quantityControl button {
   background: #334155;
   color: #f1f5f9;
