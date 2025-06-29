@@ -21,7 +21,6 @@ export const getCart = () => {
     const localData = localStorage.getItem(userCartKey);
     return localData ? JSON.parse(localData) : [];
   } catch (error) {
-    console.error("Erro ao ler o carrinho do localStorage:", error);
     return [];
   }
 };
@@ -30,7 +29,6 @@ export const saveCart = (cartItems) => {
   const userCartKey = generateUserCartKey();
 
   if (!userCartKey) {
-    console.warn("Nenhum usuário logado. O carrinho não será salvo.");
     return;
   }
 
