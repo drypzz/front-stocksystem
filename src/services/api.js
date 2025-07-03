@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { logout } from "./auth";
 
-const API_BASE_URL = "https://stocksystem-464322.rj.r.appspot.com/api/v1";
+const API_BASE_URL = "https://api.stksystem.shop/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
