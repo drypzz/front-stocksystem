@@ -149,7 +149,7 @@
 
 @media screen and (max-width: 960px) {
     .toastContainer {
-        top: 20px;
+        top: 70px;
         left: 50%;
         right: auto;
         transform: translateX(-50%);

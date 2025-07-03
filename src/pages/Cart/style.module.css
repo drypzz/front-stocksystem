@@ -80,7 +80,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 1rem;
 }
 
@@ -141,15 +141,20 @@
 }
 
 .removeButton {
-  background: none;
-  border: none;
-  color: #64748b;
-  cursor: pointer;
+  background: transparent;
+  border: 1px solid #475569;
+  color: #94a3b8;
   padding: 0.5rem;
-  transition: color 0.2s;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .removeButton:hover {
+  border-color: #ef4444;
   color: #ef4444;
 }
 
@@ -291,6 +296,13 @@
 }
 
 @media screen and (max-width: 960px) {
+
+  .cartItem {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
   .cartGrid {
     grid-template-columns: 1fr;
   }

@@ -300,7 +300,7 @@ class OrderHistory extends Component {
               agora?
             </p>
             <Link
-              to="/"
+              to="/shop"
               className={`${styles.actionButton} ${styles.detailsButton}`}
             >
               Ir para a Loja
