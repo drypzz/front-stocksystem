@@ -9,7 +9,8 @@ import {
   FiLogOut,
   FiUser,
   FiGrid,
-  FiArchive 
+  FiArchive,
+  FiHelpCircle, // 1. ÍCONE DE SUPORTE IMPORTADO AQUI
 } from "react-icons/fi";
 
 import { isAuthenticated, logout, getUser } from "../../services/auth";
@@ -75,7 +76,7 @@ export default class Navbar extends Component {
   handleLogout = () => {
     this.closeAllMenus();
     logout();
-    window.location.href = "/login"; 
+    window.location.href = "/login";
   };
 
   getUserInitial = () => {
@@ -85,7 +86,7 @@ export default class Navbar extends Component {
 
   render() {
     const { isMobileMenuOpen, authenticated, isSubmenuOpen } = this.state;
-    
+
     const { cartItems } = this.context;
     const totalItemsInCart = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -152,6 +153,17 @@ export default class Navbar extends Component {
                     >
                       <FiArchive /> Histórico
                     </NavLink>
+
+                    <a
+                      href="https://support.stksystem.shop"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.submenuLink}
+                      onClick={this.closeAllMenus}
+                    >
+                      <FiHelpCircle /> Suporte
+                    </a>
+
                     <button onClick={this.handleLogout} className={styles.submenuLogout}>
                       <FiLogOut /> Sair
                     </button>
