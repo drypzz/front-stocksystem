@@ -3,8 +3,8 @@
 > Uma aplicação full-stack que simula um sistema de gestão de ponta-a-ponta, com controle de estoque, criação de pedidos e um fluxo de pagamento completo integrado com PIX via Mercado Pago.
 
 <p align="center">
-  <a href="https://stksystem.vercel.app" target="_blank">
-    <img alt="Deploy na Vercel" src="https://img.shields.io/badge/Ver%20Demo-stksystem.vercel.app-%23000000?style=for-the-badge&logo=vercel">
+  <a href="https://stksystem.shop" target="_blank">
+    <img alt="Deploy na Vercel" src="https://img.shields.io/badge/Build-stksystem.shop-%23000000?style=for-the-badge&logo=vercel">
   </a>
 </p>
 
@@ -61,15 +61,6 @@ Este projeto é dividido em duas partes principais:
 * **[CSS Modules](https://github.com/css-modules/css-modules):** Para estilização encapsulada e componentizada, evitando conflitos de classes.
 * **[Vercel](https://vercel.com/):** Plataforma de hospedagem para deploy contínuo do front-end.
 
-### **Back-end ([Ver Repositório](https://github.com/drypzz/api-StockSystem))**
-
-* **[Node.js](https://nodejs.org/):** Ambiente de execução para o servidor.
-* **[Express.js](https://expressjs.com/):** Framework para a construção da API RESTful.
-* **[Sequelize](https://sequelize.org/):** ORM para interagir com o banco de dados de forma segura e produtiva.
-* **[Supabase](https://supabase.io/):** Utilizado como provedor de infraestrutura, incluindo o banco de dados **PostgreSQL**.
-* **[Mercado Pago SDK](https://www.mercadopago.com.br/developers):** Para integração com o gateway de pagamento e geração de cobranças PIX.
-* **[JSON Web Tokens (JWT)](https://jwt.io/):** Para gerenciamento de sessões e autenticação de rotas.
-
 ---
 
 ## 🌱 Como Começar
@@ -93,17 +84,6 @@ Para executar este projeto localmente, siga os passos abaixo.
     cd ../front-stocksystem && npm install
     ```
 
-### Configuração de Ambiente
-
-1.  **Back-end:** Crie um arquivo `.env` na raiz do projeto `api-StockSystem` e preencha com as suas credenciais:
-    ```env
-    API_PORT=3001
-    DATABASE_URL=sua_string_de_conexao_do_supabase
-    MERCADO_PAGO_ACCESS_TOKEN=seu_token_de_acesso_do_mercado_pago
-    JWT_SECRET=seu_segredo_jwt_aleatorio
-    BACKEND_URL=http://localhost:3001
-    ```
-
 ### Execução
 
 1.  **Inicie a aplicação React (Front-end):**
@@ -117,7 +97,7 @@ Para executar este projeto localmente, siga os passos abaixo.
 
 ## 🔗 Links Importantes
 
--   **Aplicação Online:** [https://stksystem.vercel.app](https://stksystem.vercel.app)
+-   **Aplicação Online:** [https://stksystem.shop](https://stksystem.shop)
 -   **Repositório do Back-end:** [https://github.com/drypzz/api-StockSystem](https://github.com/drypzz/api-StockSystem)
 
 > by drypzz
