@@ -142,7 +142,7 @@ class Cart extends Component {
         <div className={styles.cartContent}>
           <header className={styles.cartHeader}>
             <h1 className={styles.title}><FiShoppingCart /> Seu Carrinho</h1>
-            <Link to="/" className={styles.continueShopping}>
+            <Link to="/shop" className={styles.continueShopping}>
               <FiArrowLeft /> Continuar Comprando
             </Link>
           </header>
